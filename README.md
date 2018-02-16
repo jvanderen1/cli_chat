@@ -1,1 +1,1 @@
-# cli_chat
+# Command Line Interface Texting (CLIT)
