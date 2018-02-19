@@ -4,6 +4,6 @@ int admin::lockRoom() {
   return 0;
 }
 
-int admin::delectRoom() {
+int admin::deleteRoom() {
   return 0;
 }

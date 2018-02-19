@@ -6,7 +6,7 @@
 class admin : public client {
  public:
   int lockRoom();
-  int delectRoom();
+  int deleteRoom();
 
  private:
   int adminID;
