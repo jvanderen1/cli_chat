@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Socket</title>
+</head>
+<body>
+	<h1 id="text"></h1>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		/*
+		 * Instantiate a new instance of the sokcet.io client class
+		 */
+		var io = io();
+
+		/*
+		 * When our client connects to our server, display relevant text to the DOM
+		 */
+		io.on('connect', (socket) => {
+			document.getElementById('text').innerHTML = 'connected';
+		});
+
+		/*
+		 * When our client disconnects from our server, display relevant text to the DOM
+		 */
+		io.on('disconnect', () => {
+			document.getElementById('text').innerHTML = 'disconnected';
+		});
+	</script>
+</body>
+</html>
