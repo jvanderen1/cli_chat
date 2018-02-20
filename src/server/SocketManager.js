@@ -18,7 +18,7 @@ class SocketManager {
 	/*
 	 * Constructor takes in instance of socket.io class
 	 */
-	constructor(io, privateMessageManager) {
+	constructor(io) {
 		this.io = io;
 		this.users = [];
 	}
