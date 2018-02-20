@@ -20,7 +20,7 @@ class SocketManager {
 	 */
 	constructor(io) {
 		this.io = io;
-		this.users = []
+		this.users = [];
 	}
 
 	/*
@@ -58,6 +58,6 @@ class SocketManager {
 }
 
 /*
- * Export the SocketManager class
+ * Export the class
  */
 module.exports = SocketManager
