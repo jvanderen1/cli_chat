@@ -6,6 +6,15 @@
 </head>
 <body>
 	<h1 id="text"></h1>
+	<h4 id="id"></h4>
+	<div id="users">
+	</div>
+	<input type="text" id="toUserInput"><label for="toUserInput">Recepient ID</label><br>
+	<input type="text" id="messageInput">
+	<button id="send">Send Message</button>
+	<h4>Messages</h4>
+	<div id="messages"></div>
+	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script type="text/javascript">
 		/*
@@ -16,15 +25,71 @@
 		/*
 		 * When our client connects to our server, display relevant text to the DOM
 		 */
-		io.on('connect', (socket) => {
-			document.getElementById('text').innerHTML = 'connected';
+		io.on('connect', () => {
+			$('#text').text('Connected');
+			$('#id').text("My ID: " + io.id);
 		});
 
 		/*
 		 * When our client disconnects from our server, display relevant text to the DOM
 		 */
 		io.on('disconnect', () => {
-			document.getElementById('text').innerHTML = 'disconnected';
+			$('#text').text('disconnected');
+		});
+
+		/*
+		 * When we receive an update users event with an updated list of connected users,
+		 * loop over the list of users and display all IDs of users who are not ourself.
+		 */
+		io.on('users', (users) => {
+			/*
+			 * Empty out user DOM list before re-adding users to list
+			 */
+			$("#users").empty();
+
+			/*
+			 * Iterate over user list and append to DOM node
+			 */
+			users[0].forEach((user) => {
+				if (user != io.id)
+					$("#users").append("<p>"+user+"</p>");
+			});
+
+			/*
+			 * Attach click handler to each user ID so that when clicked the 
+			 * recepient ID field is filled in 
+			 */
+			$("#users p").click((event) => {
+				$("#toUserInput").val(event.target.innerText);
+			});
+		});
+
+		/*
+		 * When we receive a new message event, 
+		 */
+		io.on('private message', (fromUser, message) => {
+			$("#messages").append("<p>From: " + fromUser + "<br>Message: " + message + "</p>");
+		});
+
+		/*
+		 * Attach click event to send button so send message to someone
+		 */
+		$("#send").click(() => {
+			/*
+			 * Check that both input fields are not empty before trying to send
+			 */
+			if ($("#toUserInput").val() != "" && $('#messageInput').val() != "") {
+				/*
+				 * Send the server the socket id of the user to send the message to and
+				 * the message body.
+				 */
+				io.emit('private message', $("#toUserInput").val(), $('#messageInput').val());
+
+				/*
+				 * Clear message input
+				 */
+				$('#messageInput').val('');
+			}
 		});
 	</script>
 </body>

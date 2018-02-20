@@ -26,7 +26,8 @@ const Log = require('./Log');
 /*
  * Instantiate a new Log class instance
  */
-let logger = new Log();
+let DEBUG = true;
+let logger = new Log(DEBUG);
 logger.info('Initializing Server...');
 
 /*
@@ -52,11 +53,45 @@ socketManager.on('connection', (socket) => {
 	logger.info('User Connected with ID of ' + socket.id);
 
 	/*
+	 * Call the update users method to send out the updated list
+	 * of connected user socket IDs.
+	 */
+	socketManager.updateUsers();
+
+	/*
 	 * Bind the disconnect event to our SocketManager
-	 * instance anc log that a user disconnected.
+	 * instance and log that a user disconnected.
 	 */
 	socket.on('disconnect', () => {
+		/*
+		 * Log that a user disconnected from our server and log
+		 * the UUID of that user.
+		 */
 		logger.error('User Disconnected with ID of ' + socket.id);
+
+		/*
+		 * Call the update users method to send out the updated list
+		 * of connected user socket IDs.
+		 */
+		socketManager.updateUsers();
+	});
+
+	/*
+	 * Bind the message event to our SocketManager instance
+	 * and log it. This event handler will then send the message
+	 * to the appropriate message to the specified socket ID.
+	 */
+	socket.on('private message', (toUser, message) => {
+		/*
+		 * Log the event in the server console.
+		 */
+		logger.info('Received message from ' + socket.id + ' with content: ' + message);
+		logger.info('that will be transmitted to ' + toUser);
+
+		/*
+		 * Transmit the received message payload to the specified socket ID.
+		 */
+		socket.to(toUser).emit('private message', socket.id, message);
 	});
 });
 

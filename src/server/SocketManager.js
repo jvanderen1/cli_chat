@@ -20,6 +20,7 @@ class SocketManager {
 	 */
 	constructor(io) {
 		this.io = io;
+		this.users = []
 	}
 
 	/*
@@ -28,6 +29,31 @@ class SocketManager {
 	 */
 	on(event, callback) {
 		this.io.on(event, callback);
+	}
+
+	/*
+	 * This method takes in a string for a socket event
+	 * and any multiple of arguments for data transmission.
+	 */
+	emit(event, ...args) {
+		this.io.emit(event, args);
+	}
+
+	/*
+	 * This method gets the IDs of the currently connected
+	 * sockets and sets them equal to the users property 
+	 * of the SocketManager instance.
+	 */
+	connectedUsers() {
+		return this.users = Object.keys(this.io.of('/').connected);
+	}
+
+	/*
+	 * Log and send out an event to all users with the updated
+	 * list of connected users.
+	 */
+	updateUsers() {
+		this.emit('users', this.connectedUsers());
 	}
 }
 

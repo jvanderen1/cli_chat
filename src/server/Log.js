@@ -20,20 +20,43 @@
 var colors = require('colors');
 
 class Log {
+	/*
+	 * Get application debug state
+	 */
+	constructor(debugOn) {
+		this.debugOn = debugOn;
+	}
+
+	/*
+	 * Abstract log function that checks
+	 * whether application debug is enabled
+	 * and logging should be executed
+	 */
+	logMessage(message) {
+		if (this.debugOn)
+			console.log(message)
+	}
+
+	/*
+	 * The four following functions provide wrappers
+	 * for printing out output to the console in
+	 * different colors.
+	 */
+
 	info(message) {
-		console.log(message.cyan)
+		this.logMessage(message.cyan)
 	}
 
 	success(message) {
-		console.log(message.green)
+		this.logMessage(message.green)
 	}
 
 	warn(message) {
-		console.log(message.yellow)
+		this.logMessage(message.yellow)
 	}
 
 	error(message) {
-		console.log(message.red)
+		this.logMessage(message.red)
 	}
 }
 
