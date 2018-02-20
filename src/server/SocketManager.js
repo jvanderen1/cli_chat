@@ -18,9 +18,9 @@ class SocketManager {
 	/*
 	 * Constructor takes in instance of socket.io class
 	 */
-	constructor(io) {
+	constructor(io, privateMessageManager) {
 		this.io = io;
-		this.users = []
+		this.users = [];
 	}
 
 	/*
@@ -58,6 +58,6 @@ class SocketManager {
 }
 
 /*
- * Export the SocketManager class
+ * Export the class
  */
 module.exports = SocketManager

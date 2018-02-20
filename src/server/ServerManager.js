@@ -5,7 +5,7 @@
  * 
  * Updated: February 19. 2018 by Grant Savage
  *
- * SocketManager.js
+ * ServerManager.js
  * 
  * This file contains the class definition for the 
  * ServerManager class. The ServerManager class pulls

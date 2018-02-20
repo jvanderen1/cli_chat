@@ -17,10 +17,13 @@
  * Pull in required modules and dependencies. We need a Server Manager for 
  * handling the core of our server and a SocketManager for handling our
  * web socket core. We also pull in a custom logger to make things easier
- * to debug.
+ * to debug. In addition we also pull in our modules that handle the event
+ * received by the clients.
  */
 const SocketManager = require('./SocketManager');
 const ServerManager = require('./ServerManager');
+const PrivateMessageManager = require('./PrivateMessageManager');
+const RoomManager = require('./RoomManager');
 const Log = require('./Log');
 
 /*
@@ -77,22 +80,21 @@ socketManager.on('connection', (socket) => {
 	});
 
 	/*
-	 * Bind the message event to our SocketManager instance
-	 * and log it. This event handler will then send the message
-	 * to the appropriate message to the specified socket ID.
+	 * Instantiate a new instance of the PrivateMessageManager class and 
+	 * pass in the socket instance and logger instance. The PrivateMessageManager
+	 * class handles the events that correspond to sending peer to peer messages.
 	 */
-	socket.on('private message', (toUser, message) => {
-		/*
-		 * Log the event in the server console.
-		 */
-		logger.info('Received message from ' + socket.id + ' with content: ' + message);
-		logger.info('that will be transmitted to ' + toUser);
+	let privateMessageManager = new PrivateMessageManager(socket, logger);
+	privateMessageManager.handleEvent();
 
-		/*
-		 * Transmit the received message payload to the specified socket ID.
-		 */
-		socket.to(toUser).emit('private message', socket.id, message);
-	});
+	/*
+	 * Instantiate a new instance of the RoomManager class and pass
+	 * in the socket instance and logger instance. The RoomManager class
+	 * handles the events that correspond to joining, leaving, and sending
+	 * messages in specified rooms.
+	 */
+	let roomManager = new RoomManager(socket, logger);
+	roomManager.handleEvent();
 });
 
 /*
