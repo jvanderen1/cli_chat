@@ -1,4 +1,4 @@
-OBJS = main.o cli_client.o sio_client_impl.o  sio_client.o  sio_packet.o  sio_socket.o
+OBJS = main.o cli_client.o sio_client_impl.o  sio_client.o  sio_packet.o  sio_socket.o Connection_Listener.o
 CC = g++ -std=c++0x
 DEBUG = -g
 CFLAGS = -Wall -c $(DEBUG)
@@ -16,10 +16,18 @@ main.o: main.cpp
 	$(CC) $(MAIN_INCLUDE) $(CFLAGS) main.cpp
 
 CLIENT_INCLUDE = \
-	-I client/socket.io-client-cpp/src
+	-I client/socket.io-client-cpp/src \
+  -I client
 
 cli_client.o: client/cli_client.cpp client/cli_client.hpp
 	$(CC) $(CLIENT_INCLUDE) $(CFLAGS) client/cli_client.cpp
+
+CONNECTION_LISTENER_INCLUDE = \
+	-I client/socket.io-client-cpp/src
+
+Connection_Listener.o: client/Connection_Listener.cpp client/Connection_Listener.hpp
+	$(CC) $(CONNECTION_LISTENER_INCLUDE) $(CFLAGS) client/Connection_Listener.cpp
+
 
 SOCKET_CLIENT_INCLUDE = \
 	-I client/socket.io-client-cpp/lib/rapidjson/include \
