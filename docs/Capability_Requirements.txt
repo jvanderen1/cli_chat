@@ -14,12 +14,16 @@ Capability Requirements:
 
 7) The user that creates a room becomes the administrator of that room
 
-8) Once the administrator of the room leaves, all participants in the room are kicked out, and the room is deleted
+8) Once the administrator of the room leaves, all participants in the room are kicked out and the room is deleted
 
-9) The name of any room is created by the user and no two rooms can have the same name
+9) Any user within a room can choose to lock the room so that no other user can enter that specific chat room
 
-10) Every user has a designated random color for their name when their messages appear in the chat
+10) Any user within a locked room can choose to unlock that room
 
-11) Any user has the ability to block another user or to unblock those they have blocked
+11) The name of any room is created by the user and no two rooms can have the same name
 
-12) Every room has a variable keeping track of the number of participants in the room and the ID of those participants
+12) Every user has a designated random color for their name when their messages appear in the chat
+
+13) Any user has the ability to block another user or to unblock those they have blocked
+
+14) Every room has a variable keeping track of the number of participants in the room and the ID of those participants
