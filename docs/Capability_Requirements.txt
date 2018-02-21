@@ -1,21 +1,25 @@
 Capability Requirements:
 
-1) 
+1) Must generate an ID made of a string of random characters and numbers for every user that connects to the server
 
-2) 
+2) Every user must have the ability to create a room
 
-3) 
+3) Every user must have the ability to leave a room
 
-4) 
+4) Every user must have the ability to send a message
 
-5) 
+5) Every user can join either a one on one chat or a group chat
 
-6) 
+6) A user can only be in one chat room or in none at any given moment
 
-7) 
+7) The user that creates a room becomes the administrator of that room
 
-8) 
+8) Once the administrator of the room leaves, all participants in the room are kicked out, and the room is deleted
 
-9) 
+9) The name of any room is created by the user and no two rooms can have the same name
 
-10) 
+10) Every user has a designated random color for their name when their messages appear in the chat
+
+11) Any user has the ability to block another user or to unblock those they have blocked
+
+12) Every room has a variable keeping track of the number of participants in the room and the ID of those participants
