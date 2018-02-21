@@ -25,7 +25,7 @@ cli_client.o: client/cli_client.cpp client/cli_client.hpp
 CONNECTION_LISTENER_INCLUDE = \
 	-I client/socket.io-client-cpp/src
 
-Connection_Listener.o: client/Connection_Listener.cpp client/Connection_Listener.hpp
+Connection_Listener.o: client/Connection_Listener.cpp client/Connection_Listener.hpp client/shared_variables.h
 	$(CC) $(CONNECTION_LISTENER_INCLUDE) $(CFLAGS) client/Connection_Listener.cpp
 
 

@@ -5,49 +5,19 @@
 
 #include "cli_client.hpp"
 #include "sio_client.h"
+#include "shared_variables.h"
+#include "Connection_Listener.hpp"
 
-using namespace sio;
+cli_client::cli_client(std::string IP) { 
 
-std::mutex _lock;
-std::condition_variable_any _cond;
-bool connect_finish = false;
-
-class connection_listener
-{
-private:
-    sio::client &handler;
-
-public:
-    connection_listener(sio::client& h) : handler(h) 
-    { 
-    }
-    
-
-    void on_connected()
-    {
-        std::cout << " I have connected " << std::endl;
-        _lock.lock();
-        _cond.notify_all();
-        connect_finish = true;
-        _lock.unlock();
-    }
-    void on_close(client::close_reason const& reason)
-    {
-        std::cout << "sio closed " << std::endl;
-        exit(0);
-    }
-    
-    void on_fail()
-    {
-        std::cout<<"sio failed "<<std::endl;
-        exit(0);
-    }
-};
-
-cli_client::cli_client(std::string IP) {
-  sio::client h;
-  connection_listener l(h);
+  connection_listener listener(h);
+  
+  h.set_open_listener(std::bind(&connection_listener::on_connected, &listener));
+  h.set_close_listener(std::bind(&connection_listener::on_close, &listener, std::placeholders::_1));
+  h.set_fail_listener(std::bind(&connection_listener::on_fail, &listener));
+  
   h.connect("http://" + IP);
+  
 }
 
 int cli_client::createRoom() {

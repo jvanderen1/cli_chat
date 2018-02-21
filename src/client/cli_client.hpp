@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "sio_client.h"
+
 class cli_client {
  public:
   cli_client(std::string IP);
@@ -11,6 +13,8 @@ class cli_client {
   int leaveRoom();
 
  private:
+  sio::client h;
+  
   std::string name;
   std::string color;
   int clientID;

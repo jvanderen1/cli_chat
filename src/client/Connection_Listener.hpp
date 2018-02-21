@@ -3,8 +3,7 @@
 
 #include "sio_client.h"
 
-class connection_listener
-{
+class connection_listener {
 private:
   sio::client &handler;
 public:
