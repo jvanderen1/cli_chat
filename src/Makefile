@@ -1,4 +1,4 @@
-OBJS = main.o client.o sio_client_impl.o  sio_client.o  sio_packet.o  sio_socket.o
+OBJS = main.o cli_client.o sio_client_impl.o  sio_client.o  sio_packet.o  sio_socket.o
 CC = g++ -std=c++0x
 DEBUG = -g
 CFLAGS = -Wall -c $(DEBUG)
@@ -18,8 +18,8 @@ main.o: main.cpp
 CLIENT_INCLUDE = \
 	-I client/socket.io-client-cpp/src
 
-client.o: client/client.cpp client/client.hpp
-	$(CC) $(CLIENT_INCLUDE) $(CFLAGS) client/client.cpp
+cli_client.o: client/cli_client.cpp client/cli_client.hpp
+	$(CC) $(CLIENT_INCLUDE) $(CFLAGS) client/cli_client.cpp
 
 SOCKET_CLIENT_INCLUDE = \
 	-I client/socket.io-client-cpp/lib/rapidjson/include \

@@ -3,8 +3,9 @@
 
 #include <iostream>
 
-class client {
+class cli_client {
  public:
+  cli_client(std::string IP);
   int createRoom();
   int selectRoom();
   int leaveRoom();
