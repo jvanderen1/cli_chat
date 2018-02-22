@@ -1,8 +1,5 @@
 #include <iostream>
 
-#include <mutex>
-#include <condition_variable>
-
 #include "cli_client.hpp"
 #include "sio_client.h"
 #include "shared_variables.h"
