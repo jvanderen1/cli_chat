@@ -3,11 +3,13 @@
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
  * 
- * Updated: February 22. 2018 by Grant Savage
+ * Updated: February 22. 2018
  *
  * index.js
  * 
- * This file serves as our client application. When run, 
+ * This file serves as our client application. When run,
+ * this application connects to our backend server and allows
+ * the realying of messages to other clients connected.
  */
 
 /*
