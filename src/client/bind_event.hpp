@@ -5,12 +5,12 @@
 
 class bind_event {
 private:
-  int participant;
+  int participants;
   sio::socket::ptr current_socket;
 public:
-  bind_event(){participant = -1;};
+  bind_event(){participants = -1;};
   void new_message();
-  void user_joined();
+  void user_joined(sio::client::close_reason const& reason);
   void user_left();
 };
 

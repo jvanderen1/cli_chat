@@ -8,12 +8,11 @@
 
 #include "shared_variables.h"
 
+#define HIGHLIGHT(__O__) std::cout<<__O__<<std::endl
+#define EM(__O__) std::cout<<__O__<<std::endl
+
 using namespace sio;
 using namespace std;
-
-std::mutex _lock;
-std::condition_variable_any _cond;
-bool connect_finish;
 
 void bind_event::new_message() {
 	current_socket->on("new message", sio::socket::event_listener_aux([&](string const& name, message::ptr const& data, bool isAck,message::list &ack_resp)
