@@ -1,4 +1,4 @@
-OBJS = main.o cli_client.o sio_client_impl.o  sio_client.o  sio_packet.o  sio_socket.o Connection_Listener.o shared_variables.o
+OBJS = main.o cli_client.o sio_client_impl.o  sio_client.o  sio_packet.o  sio_socket.o Connection_Listener.o shared_variables.o bind_event.o
 CC = g++ -std=c++0x
 DEBUG = -g
 CFLAGS = -Wall -c $(DEBUG)
@@ -46,6 +46,12 @@ sio_packet.o: socket.io-client-cpp/src/internal/sio_packet.cpp socket.io-client-
 sio_socket.o: socket.io-client-cpp/src/sio_socket.cpp socket.io-client-cpp/src/sio_socket.h
 	$(CC) $(SOCKET_CLIENT_INCLUDE) $(CFLAGS) socket.io-client-cpp/src/sio_socket.cpp
 
+BIND_EVENT_INCLUDE = \
+	-I socket.io-client-cpp/src
+  
+bind_event.o: bind_event.cpp bind_event.hpp
+	$(CC) $(BIND_EVENT_INCLUDE) $(CFLAGS) bind_event.cpp
+ 
 .PHONY : clean
 clean :
 	rm -f *.o client_cli_chat
