@@ -49,52 +49,52 @@ let socketManager = new SocketManager(serverManager.io);
  * it receives specific events on that connection.
  */
 socketManager.on('connection', (socket) => {
-	/*
-	 * Log that a new user connected to our server and log
-	 * the UUID that the socketManager assigns that user.
-	 */
-	logger.info('User Connected with ID of ' + socket.id);
+  /*
+   * Log that a new user connected to our server and log
+   * the UUID that the socketManager assigns that user.
+   */
+  logger.info('User Connected with ID of ' + socket.id);
 
-	/*
-	 * Call the update users method to send out the updated list
-	 * of connected user socket IDs.
-	 */
-	socketManager.updateUsers();
+  /*
+   * Call the update users method to send out the updated list
+   * of connected user socket IDs.
+   */
+  socketManager.updateUsers();
 
-	/*
-	 * Bind the disconnect event to our SocketManager
-	 * instance and log that a user disconnected.
-	 */
-	socket.on('disconnect', () => {
-		/*
-		 * Log that a user disconnected from our server and log
-		 * the UUID of that user.
-		 */
-		logger.error('User Disconnected with ID of ' + socket.id);
+  /*
+   * Bind the disconnect event to our SocketManager
+   * instance and log that a user disconnected.
+   */
+  socket.on('disconnect', () => {
+    /*
+     * Log that a user disconnected from our server and log
+     * the UUID of that user.
+     */
+    logger.error('User Disconnected with ID of ' + socket.id);
 
-		/*
-		 * Call the update users method to send out the updated list
-		 * of connected user socket IDs.
-		 */
-		socketManager.updateUsers();
-	});
+    /*
+     * Call the update users method to send out the updated list
+     * of connected user socket IDs.
+     */
+    socketManager.updateUsers();
+  });
 
-	/*
-	 * Instantiate a new instance of the PrivateMessageManager class and 
-	 * pass in the socket instance and logger instance. The PrivateMessageManager
-	 * class handles the events that correspond to sending peer to peer messages.
-	 */
-	let privateMessageManager = new PrivateMessageManager(socket, logger);
-	privateMessageManager.handleEvent();
+  /*
+   * Instantiate a new instance of the PrivateMessageManager class and
+   * pass in the socket instance and logger instance. The PrivateMessageManager
+   * class handles the events that correspond to sending peer to peer messages.
+   */
+  let privateMessageManager = new PrivateMessageManager(socket, logger);
+  privateMessageManager.handleEvent();
 
-	/*
-	 * Instantiate a new instance of the RoomManager class and pass
-	 * in the socket instance and logger instance. The RoomManager class
-	 * handles the events that correspond to joining, leaving, and sending
-	 * messages in specified rooms.
-	 */
-	let roomManager = new RoomManager(socket, logger);
-	roomManager.handleEvent();
+  /*
+   * Instantiate a new instance of the RoomManager class and pass
+   * in the socket instance and logger instance. The RoomManager class
+   * handles the events that correspond to joining, leaving, and sending
+   * messages in specified rooms.
+   */
+  let roomManager = new RoomManager(socket, logger);
+  roomManager.handleEvent();
 });
 
 /*
@@ -105,6 +105,6 @@ socketManager.on('connection', (socket) => {
  * kernel of our server.
  */
 serverManager.http.listen(3000, () => {
-	logger.success('Server Started');
-	logger.warn('Listening on port 3000 for connections...')
+  logger.success('Server Started');
+  logger.warn('Listening on port 3000 for connections...');
 });
