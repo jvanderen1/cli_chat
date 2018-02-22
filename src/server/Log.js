@@ -17,7 +17,7 @@
 /*
  * Pull in the colors package
  */
-var colors = require('colors');
+const colors = require('colors');
 
 class Log {
 	/*
@@ -63,4 +63,4 @@ class Log {
 /*
  * Export the Log class
  */
-module.exports = Log
+module.exports = Log;

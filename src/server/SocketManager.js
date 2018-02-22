@@ -60,4 +60,4 @@ class SocketManager {
 /*
  * Export the class
  */
-module.exports = SocketManager
+module.exports = SocketManager;

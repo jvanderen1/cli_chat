@@ -41,4 +41,4 @@ class ServerManager {
 /*
  * Export ServerManager class
  */
-module.exports = ServerManager
+module.exports = ServerManager;

@@ -36,8 +36,8 @@ class PrivateMessageManager {
 			/*
 			 * Log the event in the server console.
 			 */
-			this.logger.info('Received message from ' + this.socket.id + ' with content: ' + message);
-			this.logger.info('that will be transmitted to ' + toUser);
+			this.logger.info(['Received message from', this.socket.id, 'with content:',
+				message, 'that will be transmitted to', toUser].join(' '));
 
 			/*
 			 * Transmit the received message payload to the specified socket ID.
