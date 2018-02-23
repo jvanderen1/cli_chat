@@ -1,11 +1,11 @@
 Performance Requirements:
 
-1) 
+1) The server application must be deployed on a Virtual Private Server that has at least 1GB of RAM, 1 vCPU, and 25 GB of disk space. 
 
-2) 
+2) The time it takes between the sending of a message and the receiving of a message between two users must be as close to real-time (1/1) as possible. 
 
-3) 
+3) The client must be able to connect to the server within 10 seconds of startup. Otherwise, the client will abort.
 
-4) 
+4) Upon client disconnection the client shall attempt to reconnect to the server within 10 seconds. Otherwise, the client will abort. 
 
-5) 
+5) The delay time between message sending and receiving in a room shall be the same across all clients regardless of how many clients are connected to a room.

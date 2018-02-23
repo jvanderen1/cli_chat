@@ -1,21 +1,21 @@
 Tests Mapping to Requirement . . .
 
-1) 
+1)	(Error Handling) Prevent usage of arbitrary characters
 
-2) 
+-- Try to send arbitrary characters
 
-3) 
+2)	(Recovery) When there's a lost connection, there should be a time frame to reconnect
 
-4) 
+-- Try to reconnect close to 10 seconds, determined by using a timestamp, after losing a connection
 
-5) 
+3)	(Error Handling) Check and recover from incorrect flag usage
 
-6) 
+-- Try using an unknown flag to see if the server catches it
 
-7) 
+4)	(Error Handling) Check for non-empty input when creating nickname 
 
-8) 
+-- Try setting an empty string as a nickname
 
-9) 
+5)	(Error Handling) Check for non-empty input when sending a message  
 
-10) 
+-- Try sending an empty string to another user
