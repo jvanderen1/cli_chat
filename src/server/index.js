@@ -22,9 +22,10 @@
  */
 const SocketManager = require('./SocketManager');
 const ServerManager = require('./ServerManager');
-const PrivateMessageManager = require('./PrivateMessageManager');
-const RoomManager = require('./RoomManager');
-const Log = require('./Log');
+const PrivateMessage = require('./EventHandlers/PrivateMessage');
+const Room = require('./EventHandlers/Room');
+const GroupMessage = require('./EventHandlers/GroupMessage');
+const Log = require('./Helpers/Log');
 
 /*
  * Instantiate a new Log class instance
@@ -80,21 +81,31 @@ socketManager.on('connection', (socket) => {
   });
 
   /*
-   * Instantiate a new instance of the PrivateMessageManager class and
-   * pass in the socket instance and logger instance. The PrivateMessageManager
-   * class handles the events that correspond to sending peer to peer messages.
+   * Create a dictionary of our event handler classes and 
+   * instantiate those classes.
    */
-  let privateMessageManager = new PrivateMessageManager(socket, logger);
-  privateMessageManager.handleEvent();
+  var eventHandlers = {
+    privateMessage: new PrivateMessage(socket,logger),
+    groupMessage: new GroupMessage(socket, logger),
+    room: new Room(socket, logger)
+  };
 
   /*
-   * Instantiate a new instance of the RoomManager class and pass
-   * in the socket instance and logger instance. The RoomManager class
-   * handles the events that correspond to joining, leaving, and sending
-   * messages in specified rooms.
+   * Loop through the event handlers and for each event handler
+   * register each method in an event handler to the socket 
+   * instance.
    */
-  let roomManager = new RoomManager(socket, logger);
-  roomManager.handleEvent();
+  for (var category in eventHandlers) {
+    var handlers = eventHandlers[category].handlers;
+
+    /*
+     * Register methods in each event handler class to the
+     * socket instance. 
+     */
+    for (var event in handlers) {
+      socket.on(event, handlers[event]);
+    }
+  }
 });
 
 /*

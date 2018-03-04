@@ -14,7 +14,7 @@
  * can easily switch implementations if needed.
  */
 
-class SocketManager {
+module.exports = class SocketManager {
 	/*
 	 * Constructor takes in instance of socket.io class
 	 */
@@ -56,8 +56,3 @@ class SocketManager {
 		this.emit('users', this.connectedUsers());
 	}
 }
-
-/*
- * Export the class
- */
-module.exports = SocketManager;

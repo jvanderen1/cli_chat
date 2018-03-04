@@ -18,7 +18,7 @@
  * some basic socket.io client JS for testing.
  */
 
-class ServerManager {
+module.exports = class ServerManager {
 	constructor() {
 		/*
 		 * Pull in and attach required modules to the
@@ -33,12 +33,7 @@ class ServerManager {
 		 * the root of the URL schema.
 		 */
 		this.app.get('/', (req, res) => {
-			res.sendFile(__dirname + '/index.html');
+			res.sendFile(__dirname + '/Views/index.html');
 		});
 	}
 }
-
-/*
- * Export ServerManager class
- */
-module.exports = ServerManager;
