@@ -59,7 +59,7 @@ socket.on('users', (users) => {
 /*
  * When our client receives a new private message, display who it is from and the mssage body.
  */
-socket.on('private message', (fromUser, message) => {
+socket.on('privateMessage', (fromUser, message) => {
   console.log('\n\n\tNew Message from ' + fromUser + '\n\tContent: ' + message +
       '\n');
 
@@ -110,7 +110,7 @@ let sendMessage = () => {
                * Send the id of the desired user and message body to the server
                * for relaying to the desired user.
                */
-              socket.emit('private message', users_g[user - 1], message,
+              socket.emit('privateMessage', users_g[user - 1], message,
                   (ack) => {
                     console.log('\nMessage \"' + ack + '\" sent.\n');
                     /*
