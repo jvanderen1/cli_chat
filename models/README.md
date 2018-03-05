@@ -25,3 +25,7 @@ Here are the included models:
 * [Sequence Diagram 3](Sequence%20Diagram%203.PNG)
 
 ![Sequence Diagram 3](Sequence%20Diagram%203.PNG)
+
+* [Activity Diagram](Activity%20Diagram.png)
+
+![Activity Diagram](Activity%20Diagram.png)
