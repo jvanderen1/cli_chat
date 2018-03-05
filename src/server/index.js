@@ -3,7 +3,7 @@
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
  * 
- * Updated: February 19. 2018 by Grant Savage
+ * Updated: March 4, 2018 by Grant Savage
  *
  * index.js
  * 
@@ -30,7 +30,7 @@ const Log = require('./Helpers/Log');
 /*
  * Instantiate a new Log class instance
  */
-let DEBUG = true;
+let DEBUG = false;
 let logger = new Log(DEBUG);
 logger.info('Initializing Server...');
 
@@ -115,7 +115,8 @@ socketManager.on('connection', (socket) => {
  * our server is starting. This block essentially starts the
  * kernel of our server.
  */
-serverManager.http.listen(3000, () => {
+let PORT = 3000;
+serverManager.http.listen(PORT, () => {
   logger.success('Server Started');
-  logger.warn('Listening on port 3000 for connections...');
+  logger.warn('Listening on port ' + PORT + ' for connections...');
 });
