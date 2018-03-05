@@ -2,6 +2,10 @@
 
 Here are the included models:
 
+* [Block Diagram](Block%20Diagram.png)
+
+![Block Diagram](Block%20Diagram.png)
+
 * [Use Case Model](Use%20Case%20Model.PNG)
 
 ![Use Case Model](Use%20Case%20Model.PNG)
