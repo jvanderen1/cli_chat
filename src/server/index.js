@@ -84,7 +84,7 @@ socketManager.on('connection', (socket) => {
    * Create a dictionary of our event handler classes and 
    * instantiate those classes.
    */
-  var eventHandlers = {
+  let eventHandlers = {
     privateMessage: new PrivateMessage(socket,logger),
     groupMessage: new GroupMessage(socket, logger),
     room: new Room(socket, logger)
@@ -95,14 +95,14 @@ socketManager.on('connection', (socket) => {
    * register each method in an event handler to the socket 
    * instance.
    */
-  for (var category in eventHandlers) {
-    var handlers = eventHandlers[category].handlers;
+  for (let category in eventHandlers) {
+    let handlers = eventHandlers[category].handlers;
 
     /*
      * Register methods in each event handler class to the
      * socket instance. 
      */
-    for (var event in handlers) {
+    for (let event in handlers) {
       socket.on(event, handlers[event]);
     }
   }
