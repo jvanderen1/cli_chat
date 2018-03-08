@@ -38,14 +38,18 @@ module.exports = class CLI_Client {
     * Array to keep track of the current online users.
     */
     this._users_g = [];
+    this._rooms_g = [];
+    this._currentRoom = null;
 
     /*
      * Set options available inside of Map object, where Map item = ( key, [title, function] ).
      */
     this._options_map = new Map();
     this._options_map.set(1, ['List Current Online Users', () => { this.listUsers(); }]);
-    this._options_map.set(2, ['Send Message to User', () => { this.sendMessage(); }]);
-    this._options_map.set(3, ['Exit App', () => { this.exitApp(); }]);
+    this._options_map.set(2, ['Join Room', () => { this.joinRoom(); }]);
+    this._options_map.set(3, ['Leave Room', () => { this.leaveRoom(); }]);    
+    this._options_map.set(4, ['Send Message to User', () => { this.sendMessage(); }]);
+    this._options_map.set(5, ['Exit App', () => { this.exitApp(); }]);
 
     /*
      * Used to bind all socket events to specific functions within the client.
@@ -58,20 +62,30 @@ module.exports = class CLI_Client {
      * When our client receives a users event, set the users_g variable equal
      * to the new array of online users.
      */
-    this._socket.on('users', (users) => {
-      this._users_g = users[0];
-    });
+    //this._socket.on('users', (users) => {
+    //  this._users_g = users;
+    //});
 
+    this._socket.on('nickname', (nickname) => {
+      this._users_g = this.nickname;
+      console.log('Testing123: ' + this._users_g[0]);
+      });
+
+    this._socket.on('rooms', (rooms) => {
+      this._rooms_g = rooms[0];
+    });
+    
     /*
      * When our client connects log it and display the menu options.
      */
     this._socket.on('connect', () => {
       console.log('App Connected!\n');
-      for (const [key, value] of this._options_map) {
-        console.log([key, value[0]].join(': '));
-      }
-      console.log();
-      this.getInput();
+      console.log('Current user ID: ' + this._socket.id);
+      this._rl.question('Nickname: ',
+        (nickname) => {
+          console.log(nickname);
+          this.getInput();          
+        });
     });
 
     /*
@@ -86,7 +100,7 @@ module.exports = class CLI_Client {
        */
       this.getInput();
     });
-
+    
   }
 
   /*
@@ -99,7 +113,11 @@ module.exports = class CLI_Client {
     /*
      * Get the user's menu option.
      */
-
+    console.log('\nOptions:\n');
+    for (const [key, value] of this._options_map) {
+      console.log([key, value[0]].join(': '));
+    }
+    console.log();
     this._rl.question('What would you like to do? ', (choice) => {
       /*
        * If the user selected to display the list of online users,
@@ -119,9 +137,6 @@ module.exports = class CLI_Client {
          */
 
         console.log('\nPlease choose a valid menu option.\n');
-        for (const [key, value] of this._options_map) {
-          console.log([key, value[0]].join(': '));
-        }
         console.log();
 
         /*
@@ -137,14 +152,18 @@ module.exports = class CLI_Client {
    * console.
    */
   listUsers() {
+  
     console.log('\nList of online users:\n');
 
-    for (let i = 0; i < this._users_g.length; i++) {
-      if (this._users_g[i] !== this._socket.id)
-        console.log(i + 1 + '. ' + this._users_g[i]);
+    if (this._users_g.length === 1) {
+      console.log('No other users online.');
     }
-
-    console.log('\n');
+    else {
+      for (let i = 0; i < this._users_g.length; i++) {
+        if (this._users_g[i] !== this._socket.id)
+          console.log(i + 1 + '. ' + this._users_g[i]);
+      }
+    }
 
     /*
      * Ask for user input again.
@@ -152,13 +171,101 @@ module.exports = class CLI_Client {
     this.getInput();
   }
 
+/*******************************************************************************************/
+
+  /*
+   *
+   */
+  joinRoom() {
+  
+    //this._currentRoom = null;
+
+    if (this._rooms_g.length === 0) {
+      console.log('\nNo existing rooms.');
+      this._rl.question('\nCreate room (Y/N)? ', 
+        (answer) => {
+          if (answer === 'Y') {
+            this._rl.question('\nName of room: ', 
+            (room) => {
+              this._socket.emit('joinRoom', room, (roomName) => {
+                console.log("Joined room " + roomName);
+              });
+              this._currentRoom = room;
+              this.getInput();
+            });
+          }
+          else {
+            this.getInput();
+          }
+        });
+    }
+    else {
+      console.log('\nExisting rooms: ');
+      for (let i = 0; i < this._rooms_g.length; i++) {
+          console.log(this._rooms_g[i]);
+      }
+      this._rl.question('\nWhich room would you like to join? (NONE to create room) ',
+        (room) => {
+          for (let i = 0; i < this._users_g.length; i++) {
+            if (room === this._rooms_g[i]) {
+              this._socket.emit('joinRoom', room, (roomName) => {
+                console.log("Joined room " + roomName);
+              });
+              this._currentRoom = room;
+              this.getInput();
+            }
+          }
+          if (room === 'NONE') {
+            this._rl.question('\nCreate room (Y/N)? ', 
+              (answer) => {
+                if (answer === 'Y') {
+                  this._rl.question('\nName of room: ', 
+                    (room) => {
+                      this._socket.emit('joinRoom', room, (roomName) => {
+                        console.log("Joined room " + roomName);
+                      });
+                      this._currentRoom = room;
+                      this.getInput();          
+                    });
+                }
+                else
+                  this.getInput();
+              });     
+            }
+            else if (this._currentRoom === null) {
+              console.log('\nInvalid room selection.');
+              this.getInput();
+            }
+        });
+      }   
+  }
+  
+  
+  /*
+   *
+   */  
+  leaveRoom() {
+    if (this._currentRoom !== null) {
+      this._socket.emit('leaveRoom', this.room, (roomName) => {
+        console.log("Left room " + roomName);
+      this._currentRoom = null;
+      });
+    }
+    else
+      console.log('\nYou are not currently in any rooms.');
+    this.getInput();
+  }
+
+/*******************************************************************************************/
+
   /*
    * Method used to send a message to another specified user.
    */
   sendMessage() {
 
     if (this._users_g.length === 1) {
-      console.log('\nThere are no other users to message.\n');
+      console.log('\nThere are no other users to message.');
+      this.getInput();
       return;
     }
 

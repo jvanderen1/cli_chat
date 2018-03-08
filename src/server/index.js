@@ -87,7 +87,7 @@ socketManager.on('connection', (socket) => {
   let eventHandlers = {
     privateMessage: new PrivateMessage(socket,logger),
     groupMessage: new GroupMessage(socket, logger),
-    room: new Room(socket, logger)
+    room: new Room(socket, logger, socketManager)
   };
 
   /*

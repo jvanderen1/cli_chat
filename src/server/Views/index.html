@@ -66,7 +66,7 @@
 			/*
 			 * Iterate over user list and append to DOM node
 			 */
-			users[0].forEach((user) => {
+			users.forEach((user) => {
 				if (user != io.id)
 					$("#users").append("<p>"+user+"</p>");
 			});

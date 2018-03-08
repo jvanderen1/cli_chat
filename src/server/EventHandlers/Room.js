@@ -18,9 +18,10 @@ module.exports = class Room {
    * Constructor takes in a Socket instance and
    * Log instance.
    */
-  constructor(socket, logger) {
+  constructor(socket, logger, socketManager) {
     this.socket = socket;
     this.logger = logger;
+    this.socketManager = socketManager;
     this.handlers = {
       joinRoom: this.joinRoom.bind(this),
       leaveRoom: this.leaveRoom.bind(this),
@@ -41,6 +42,8 @@ module.exports = class Room {
      * Log the action
      */
     this.logger.success([this.socket.id, 'joined room', roomName].join(' '));
+    
+    this.socketManager.updateRooms();
 
     /*
      * This acknowledge function essentially sends a message back to the client
@@ -64,6 +67,8 @@ module.exports = class Room {
      * Log the action
      */
     this.logger.error([this.socket.id, 'left room', roomName].join(' '));
+    
+    this.socketManager.updateRooms();
 
     /*
      * This acknowledge function essentially sends a message back to the client
@@ -71,6 +76,6 @@ module.exports = class Room {
      * ack returns true that the server successfully removed the client from
      * the room.
      */
-    ack(true);
+    ack(roomName);
   }
 }
