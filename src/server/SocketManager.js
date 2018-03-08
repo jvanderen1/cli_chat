@@ -21,7 +21,7 @@ module.exports = class SocketManager {
 	constructor(io) {
 		this.io = io;
 		this.users = [];
-    this.rooms = [];
+    	this.rooms = [];
 	}
 
 	/*
@@ -57,23 +57,23 @@ module.exports = class SocketManager {
 		this.emit('users', this.connectedUsers()[0]);
 	}
  
-  /*
-   *
-   */
-  createdRooms() {
-    var availableRooms = [];
-    var rooms = this.io.sockets.adapter.rooms;
-    if (rooms) {
-      for (var room in rooms) {
-        if (!rooms[room].hasOwnProperty(room)) {
-          availableRooms.push(room);
-        }
-      }
-    }
+  	/*
+   	*
+   	*/
+  	createdRooms() {
+    	var availableRooms = [];
+    	var rooms = this.io.sockets.adapter.rooms;
+    	if (rooms) {
+      		for (var room in rooms) {
+       			if (!rooms[room].hasOwnProperty(room)) {
+          			availableRooms.push(room);
+        		}
+      		}
+    	}
     
-    this.rooms = availableRooms.filter((el) => !this.users.includes(el));
+    	this.rooms = availableRooms.filter((el) => !this.users.includes(el));
     
-    return this.rooms;
+    	return this.rooms;
   }
   
   /*
