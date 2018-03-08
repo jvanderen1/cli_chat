@@ -38,6 +38,7 @@ module.exports = class CLI_Client {
     * Array to keep track of the current online users.
     */
     this._users_g = [];
+    this._nicknames_g = [];
     this._rooms_g = [];
     this._currentRoom = null;
 
@@ -62,14 +63,14 @@ module.exports = class CLI_Client {
      * When our client receives a users event, set the users_g variable equal
      * to the new array of online users.
      */
-    //this._socket.on('users', (users) => {
-    //  this._users_g = users;
-    //});
+    this._socket.on('users', (users) => {
+      this._users_g = users;
+    });
 
-    this._socket.on('nickname', (nickname) => {
-      this._users_g = this.nickname;
-      console.log('Testing123: ' + this._users_g[0]);
-      });
+    //this._socket.on('nickname', (nickname) => {
+      //this._nicknames_g = this.nickname;
+      //console.log('Testing123: ' + this._nicknames_g[0]);
+      //});
 
     this._socket.on('rooms', (rooms) => {
       this._rooms_g = rooms[0];
@@ -81,11 +82,7 @@ module.exports = class CLI_Client {
     this._socket.on('connect', () => {
       console.log('App Connected!\n');
       console.log('Current user ID: ' + this._socket.id);
-      this._rl.question('Nickname: ',
-        (nickname) => {
-          console.log(nickname);
-          this.getInput();          
-        });
+      this.createNickname();
     });
 
     /*
@@ -176,9 +173,24 @@ module.exports = class CLI_Client {
   /*
    *
    */
+  createNickname() {
+    this._rl.question('Nickname: ',
+      (nickname) => {
+        if (this._nicknames_g.indexOf(nickname) >= 0) {
+          console.log('Nickname already taken. Try another.');
+          createNickname();
+        }
+        else {
+          this._nicknames_g = nickname;
+          this.getInput();
+        }
+      });
+  }
+
+  /*
+   *
+   */
   joinRoom() {
-  
-    //this._currentRoom = null;
 
     if (this._rooms_g.length === 0) {
       console.log('\nNo existing rooms.');
@@ -187,10 +199,15 @@ module.exports = class CLI_Client {
           if (answer === 'Y') {
             this._rl.question('\nName of room: ', 
             (room) => {
-              this._socket.emit('joinRoom', room, (roomName) => {
-                console.log("Joined room " + roomName);
-              });
-              this._currentRoom = room;
+              if (room === 'NONE') {
+                console.log('Invalid room name.');
+              }
+              else {
+                this._socket.emit('joinRoom', room, (roomName) => {
+                  console.log("Joined room " + roomName);
+                });
+                this._currentRoom = room;
+              }
               this.getInput();
             });
           }
@@ -199,6 +216,11 @@ module.exports = class CLI_Client {
           }
         });
     }
+    else if (this._currentRoom !== null) {
+      console.log('\nYou are already in room ' + this._currentRoom + '.');
+      console.log('Leave your current room in order to join another.');
+      this.getInput();
+    }
     else {
       console.log('\nExisting rooms: ');
       for (let i = 0; i < this._rooms_g.length; i++) {
@@ -206,16 +228,14 @@ module.exports = class CLI_Client {
       }
       this._rl.question('\nWhich room would you like to join? (NONE to create room) ',
         (room) => {
-          for (let i = 0; i < this._users_g.length; i++) {
-            if (room === this._rooms_g[i]) {
-              this._socket.emit('joinRoom', room, (roomName) => {
-                console.log("Joined room " + roomName);
-              });
-              this._currentRoom = room;
-              this.getInput();
-            }
+          if (this._rooms_g.indexOf(room) >= 0) {
+            this._socket.emit('joinRoom', room, (roomName) => {
+              console.log("Joined room " + roomName);
+            });
+            this._currentRoom = room;
+            this.getInput();
           }
-          if (room === 'NONE') {
+          else if (room === 'NONE') {
             this._rl.question('\nCreate room (Y/N)? ', 
               (answer) => {
                 if (answer === 'Y') {
@@ -232,12 +252,12 @@ module.exports = class CLI_Client {
                   this.getInput();
               });     
             }
-            else if (this._currentRoom === null) {
-              console.log('\nInvalid room selection.');
-              this.getInput();
-            }
+          else {
+            console.log('\nInvalid room selection.');
+            this.getInput();
+          }
         });
-      }   
+      } 
   }
   
   
@@ -247,12 +267,13 @@ module.exports = class CLI_Client {
   leaveRoom() {
     if (this._currentRoom !== null) {
       this._socket.emit('leaveRoom', this.room, (roomName) => {
-        console.log("Left room " + roomName);
+        console.log("Left room.");
       this._currentRoom = null;
       });
     }
     else
       console.log('\nYou are not currently in any rooms.');
+    
     this.getInput();
   }
 
