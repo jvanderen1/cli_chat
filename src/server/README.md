@@ -1,9 +1,11 @@
 # CLI Chat Server
 
+## Prerequisites
+In order to run the server on your local machine, Node.js version 7.0.0 or higher is required. You can install Node.js with the information at [https://nodejs.org/en/]. Installing Node.js will also install NPM (Node Packaage Manager) which is required for installing dependencies. You can read more about NPM here: [https://www.npmjs.com/]
+
 ## Installation and Usage
-To run the server on your local machine, you need to install Node.js. After installing node.js,
-you also need to install npm (Node Package Manager). After installation of npm, cd into this 
-directory (/src/server) and run
+To start the server on your local machine, cd into this 
+directory ```/src/server``` and run
 ```
 npm install
 ```
