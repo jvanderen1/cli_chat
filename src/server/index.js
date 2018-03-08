@@ -30,7 +30,7 @@ const Log = require('./Helpers/Log');
 /*
  * Instantiate a new Log class instance
  */
-let DEBUG = false;
+let DEBUG = true;
 let logger = new Log(DEBUG);
 logger.info('Initializing Server...');
 
