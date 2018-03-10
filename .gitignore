@@ -63,6 +63,7 @@ Temporary Items
 # Javascript stuff
 /src/client/node_modules
 /src/server/node_modules
+.nyc_output
 
 ~$*.docx
 
