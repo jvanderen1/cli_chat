@@ -35,7 +35,9 @@ module.exports = class CLI_Client {
     });
 
     /*
-    * Array to keep track of the current online users.
+    * Array to keep track of the current online users, their 
+    * nicknames, the existing rooms, and the current room 
+    * the user is in.
     */
     this._users_g = [];
     this._nicknames_g = [];
@@ -64,7 +66,7 @@ module.exports = class CLI_Client {
      * to the new array of online users.
      */
     this._socket.on('users', (users) => {
-      this._users_g = users;
+      this._users_g = users[0];
     });
 
     //this._socket.on('nickname', (nickname) => {
@@ -154,6 +156,7 @@ module.exports = class CLI_Client {
 
     if (this._users_g.length === 1) {
       console.log('No other users online.');
+      console.log(this._users_g);
     }
     else {
       for (let i = 0; i < this._users_g.length; i++) {
@@ -171,11 +174,17 @@ module.exports = class CLI_Client {
 /*******************************************************************************************/
 
   /*
-   *
+   * Process user input for unique nicknames to replace this._socket.id (random array of
+   * characters).
    */
   createNickname() {
+  
     this._rl.question('Nickname: ',
       (nickname) => {
+        /*
+         * Check every element of the this._nicknames_g array to see if the nickname is
+         * already taken by another user.
+         */
         if (this._nicknames_g.indexOf(nickname) >= 0) {
           console.log('Nickname already taken. Try another.');
           createNickname();
@@ -188,44 +197,67 @@ module.exports = class CLI_Client {
   }
 
   /*
-   *
+   * Ask the user if they want to create a room, name it, and automatically
+   * put the user in the room.
+   */
+  createRoom() {
+  
+    this._rl.question('\nCreate room (Y/N)? ', 
+      (answer) => {
+        if (answer === 'Y') {
+          this._rl.question('\nName of room: ', 
+          (room) => {
+            if (room === 'NONE') {
+              console.log('Invalid room name.');
+            }
+            else {
+              this._socket.emit('joinRoom', room, (roomName) => {
+                console.log("Joined room " + roomName);
+              });
+              this._currentRoom = room;
+            }
+            this.getInput();
+          });
+        }
+        else {
+          this.getInput();
+        }
+      });  
+  }
+
+  /*
+   * Let user choose a room to join and put them in that room
    */
   joinRoom() {
-
+  
+    /*
+     * Prompt user to create room if there aren't any existing rooms.
+     */
     if (this._rooms_g.length === 0) {
       console.log('\nNo existing rooms.');
-      this._rl.question('\nCreate room (Y/N)? ', 
-        (answer) => {
-          if (answer === 'Y') {
-            this._rl.question('\nName of room: ', 
-            (room) => {
-              if (room === 'NONE') {
-                console.log('Invalid room name.');
-              }
-              else {
-                this._socket.emit('joinRoom', room, (roomName) => {
-                  console.log("Joined room " + roomName);
-                });
-                this._currentRoom = room;
-              }
-              this.getInput();
-            });
-          }
-          else {
-            this.getInput();
-          }
-        });
+      this.createRoom();
     }
+    /*
+     * User cannot join a room if already in a room.
+     */
     else if (this._currentRoom !== null) {
       console.log('\nYou are already in room ' + this._currentRoom + '.');
       console.log('Leave your current room in order to join another.');
       this.getInput();
     }
     else {
+      /*
+       * Print every element of the this._rooms_g array to list the
+       * existing rooms.
+       */
       console.log('\nExisting rooms: ');
       for (let i = 0; i < this._rooms_g.length; i++) {
           console.log(this._rooms_g[i]);
       }
+      /*
+       * User will enter the name of any existing room to join it or 
+       * enter 'NONE' to create a new room.
+       */
       this._rl.question('\nWhich room would you like to join? (NONE to create room) ',
         (room) => {
           if (this._rooms_g.indexOf(room) >= 0) {
@@ -236,21 +268,7 @@ module.exports = class CLI_Client {
             this.getInput();
           }
           else if (room === 'NONE') {
-            this._rl.question('\nCreate room (Y/N)? ', 
-              (answer) => {
-                if (answer === 'Y') {
-                  this._rl.question('\nName of room: ', 
-                    (room) => {
-                      this._socket.emit('joinRoom', room, (roomName) => {
-                        console.log("Joined room " + roomName);
-                      });
-                      this._currentRoom = room;
-                      this.getInput();          
-                    });
-                }
-                else
-                  this.getInput();
-              });     
+            this.createRoom();     
             }
           else {
             console.log('\nInvalid room selection.');
@@ -262,7 +280,7 @@ module.exports = class CLI_Client {
   
   
   /*
-   *
+   * Pull the user out of a room if they are in one.
    */  
   leaveRoom() {
     if (this._currentRoom !== null) {

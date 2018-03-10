@@ -21,7 +21,7 @@ module.exports = class SocketManager {
 	constructor(io) {
 		this.io = io;
 		this.users = [];
-    	this.rooms = [];
+ 	  this.rooms = [];
 	}
 
 	/*
@@ -54,7 +54,7 @@ module.exports = class SocketManager {
 	 * list of connected users.
 	 */
 	updateUsers() {
-		this.emit('users', this.connectedUsers()[0]);
+		this.emit('users', this.connectedUsers());
 	}
  
   	/*
