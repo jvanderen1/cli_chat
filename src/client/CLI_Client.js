@@ -51,7 +51,7 @@ module.exports = class CLI_Client {
     this._options_map.set(1, ['List Current Online Users', () => { this.listUsers(); }]);
     this._options_map.set(2, ['Join Room', () => { this.joinRoom(); }]);
     this._options_map.set(3, ['Leave Room', () => { this.leaveRoom(); }]);    
-    this._options_map.set(4, ['Send Message to User', () => { this.sendMessage(); }]);
+    this._options_map.set(4, ['Send Message to User/Room', () => { this.sendMessage(); }]);
     this._options_map.set(5, ['Exit App', () => { this.exitApp(); }]);
 
     /*
@@ -88,11 +88,24 @@ module.exports = class CLI_Client {
     });
 
     /*
-     * When our client receives a new private message, display who it is from and the mssage body.
+     * When our client receives a new private message, display who it is from and the message body.
      */
     this._socket.on('privateMessage', (fromUser, message) => {
       console.log('\n\n\tNew Message from ' + fromUser + '\n\tContent: ' +
           message + '\n');
+
+      /*
+       * Get user menu option choice.
+       */
+      this.getInput();
+    });
+    
+    /*
+     * When our client receives a new group message, display who it is from and the message body.
+     */
+    this._socket.on('groupMessage', (fromUser, roomName, message) => {
+      console.log('\n\n\tNew Message from ' + fromUser + '\n\tTo room: ' +
+          roomName + '\n\tContent: ' + message + '\n');
 
       /*
        * Get user menu option choice.
@@ -156,7 +169,6 @@ module.exports = class CLI_Client {
 
     if (this._users_g.length === 1) {
       console.log('No other users online.');
-      console.log(this._users_g);
     }
     else {
       for (let i = 0; i < this._users_g.length; i++) {
@@ -171,7 +183,6 @@ module.exports = class CLI_Client {
     this.getInput();
   }
 
-/*******************************************************************************************/
 
   /*
    * Process user input for unique nicknames to replace this._socket.id (random array of
@@ -295,10 +306,9 @@ module.exports = class CLI_Client {
     this.getInput();
   }
 
-/*******************************************************************************************/
 
   /*
-   * Method used to send a message to another specified user.
+   * Method used to send a message to another specified user or to everyone in the same room.
    */
   sendMessage() {
 
@@ -307,42 +317,72 @@ module.exports = class CLI_Client {
       this.getInput();
       return;
     }
+    
+    /*
+     * Send private message if user is not currently in a room
+     */
+    if (this._currentRoom === null) {
+      this._rl.question('\nWhich user would you like to send a message to? ',
+          (user) => {
 
-    this._rl.question('\nWhich user would you like to send a message to? ',
-        (user) => {
+            /*
+             * Check that the user's choice of user is in the range of the user
+             * array.
+             */
 
-          /*
-           * Check that the user's choice of user is in the range of the user
-           * array.
-           */
+            if (user < 1 || user > this._users_g.length) {
+              console.log('\nInvalid user selection.\n');
+              this.getInput();
+              return;
+            }
 
-          if (user < 1 || user > this._users_g.length) {
-            console.log('\nInvalid user selection.\n');
-            this.getInput();
-            return;
-          }
+            /*
+             * Get the content of the message to send.
+             */
+            this._rl.question('\nWhat is your message to ' + user + '? ',
+                (message) => {
+                  /*
+                   * Send the id of the desired user and message body to the
+                   * server for relaying to the desired user.
+                   */
 
-          /*
-           * Get the content of the message to send.
-           */
-          this._rl.question('\nWhat is your message to ' + user + '? ',
-              (message) => {
-                /*
-                 * Send the id of the desired user and message body to the
-                 * server for relaying to the desired user.
-                 */
+                  this._socket.emit('privateMessage', this._users_g[user - 1],
+                      message, (ack) => {
+                        console.log('\nMessage \"' + ack + '\" sent.\n');
 
-                this._socket.emit('privateMessage', this._users_g[user - 1],
-                    message, (ack) => {
-                      console.log('\nMessage \"' + ack + '\" sent.\n');
+                        /*
+                         * Display option prompt again.
+                         */
+                        this.getInput();
+                      });
+                });
+          });
+    }
+    /*
+     * Send group message to everyone in the room that the user is currently in
+     */
+    else {
+      /*
+       * Get the content of the message to send.
+       */
+      this._rl.question('\nWhat is your message to ' + this._currentRoom + '? ',
+          (message) => {
+            /*
+             * Send the room name of the user's current room and message body to the
+             * server for relaying to the desired room.
+             */
 
-                      /*
-                       * Display option prompt again.
-                       */
-                      this.getInput();
-                    });
-              });
-        });
+            this._socket.emit('groupMessage', this._currentRoom,
+                message, (ack) => {
+                  console.log('\nMessage \"' + ack + '\" sent.\n');
+
+                  /*
+                   * Display option prompt again.
+                   */
+                  this.getInput();
+                });
+          });
+    }
   }
 
   /*
