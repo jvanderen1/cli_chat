@@ -1,0 +1,140 @@
+Script started on Sun 18 Mar 2018 10:20:55 PM MST
+groups: cannot find name for group ID 1324619144
+]0;tanc5@prcoesevs1: ~/cli_chat/src/clienttanc5@prcoesevs1:~/cli_chat/src/client$ node index.js
+App Connected!
+
+Current user ID: EjnOw6kKJ2oQpl2PAAAB
+[1G[0JNickname: [11Gjacob
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28G1
+
+List of online users:
+
+1. 70VOaLxUJpqXYkyfAAAA
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28G2
+
+Existing rooms: 
+ABC
+[1G[0J
+Which room would you like to join? (NONE to create room) [58Gabc
+
+Invalid room selection.
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28G2
+
+Existing rooms: 
+ABC
+[1G[0J
+Which room would you like to join? (NONE to create room) [58GNONE
+[1G[0J
+Create room (Y/N)? [20GN
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28G2
+
+Existing rooms: 
+ABC
+[1G[0J
+Which room would you like to join? (NONE to create room) [58GABC
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28GJoined room ABC
+4
+[1G[0J
+What is your message to ABC? [30GHello
+
+Message "Hello" sent.
+
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28G3
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28GLeft room.
+
+
+	New Message from 70VOaLxUJpqXYkyfAAAA
+	Content: Hi
+
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28G3
+
+You are not currently in any rooms.
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28G5
+
+Quitting App...
+
+]0;tanc5@prcoesevs1: ~/cli_chat/src/clienttanc5@prcoesevs1:~/cli_chat/src/client$ exit
+exit
+
+Script done on Sun 18 Mar 2018 10:23:54 PM MST

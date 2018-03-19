@@ -1,0 +1,123 @@
+Script started on Sun 18 Mar 2018 10:20:30 PM MST
+groups: cannot find name for group ID 1324619144
+]0;tanc5@prcoesevs1: ~/cli_chat/src/clienttanc5@prcoesevs1:~/cli_chat/src/client$ node index.js
+App Connected!
+
+Current user ID: 70VOaLxUJpqXYkyfAAAA
+[1G[0JNickname: [11Gjoy
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28G1
+
+List of online users:
+
+2. EjnOw6kKJ2oQpl2PAAAB
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28G2
+
+No existing rooms.
+[1G[0J
+Create room (Y/N)? [20GY
+[1G[0J
+Name of room: [15GABC
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28GJoined room ABC
+2
+
+You are already in room ABC.
+Leave your current room in order to join another.
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28G
+
+	New Message from EjnOw6kKJ2oQpl2PAAAB
+	To room: ABC
+	Content: Hello
+
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28G3
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28GLeft room.
+3
+
+You are not currently in any rooms.
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28G4
+[1G[0J
+Which user would you like to send a message to? [49G2
+[1G[0J
+What is your message to 2? [28GHi
+
+Message "Hi" sent.
+
+
+Options:
+
+1: List Current Online Users
+2: Join Room
+3: Leave Room
+4: Send Message to User/Room
+5: Exit App
+
+[1G[0JWhat would you like to do? [28G5
+
+Quitting App...
+
+]0;tanc5@prcoesevs1: ~/cli_chat/src/clienttanc5@prcoesevs1:~/cli_chat/src/client$ exit
+exit
+
+Script done on Sun 18 Mar 2018 10:23:51 PM MST
