@@ -35,7 +35,7 @@ const options = {
  * of the system such as receiving an updated list of rooms
  * when joining or leaving a room.
  */
-describe('Room', () => {
+describe('Web Interface', () => {
 	/*
 	 * Before the test starts, start the server.
 	 */
