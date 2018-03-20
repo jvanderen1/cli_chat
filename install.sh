@@ -1,4 +1,3 @@
 #!/bin/sh
-cd src/server && npm install
-cd .. && cd client
-npm install
+npm install --prefix src/server
+npm install --prefix src/client
