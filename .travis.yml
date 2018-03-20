@@ -8,3 +8,5 @@ cache:
     - "src/server/node_modules"
 script:
   - npm test --prefix src/server
+after_success:
+  - npm run coverage
