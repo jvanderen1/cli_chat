@@ -38,6 +38,51 @@ describe('Client Group Message Passing', () => {
 	/*
 	 * @test
 	 *
+	 * This tests that a client in a room should be able to receive
+	 * messages from other clients in the same room.
+	 */
+	it('should be able to receive messages from users in room', (done) => {
+		// Create a test string to send
+		const roomName = "abc123";
+		const testMessage = "Hello World!";
+
+		// Create a new client
+		const client1 = io.connect(socketURL, options);
+
+		// Bind the connect event to the client.
+		client1.on('connect', () => {
+			// When the first client connects, create another client
+			const client2 = io.connect(socketURL, options);
+
+			// Bind the connect event to the second client
+			client2.on('connect', () => {
+				client1.emit('joinRoom', roomName, (data) => {
+					data.should.equal(roomName);
+
+					client2.emit('joinRoom', roomName, (data) => {
+						data.should.equal(roomName);
+
+						// Send a private message to the second client
+						client1.emit('groupMessage', roomName, testMessage, (message) => {});
+					});
+				});
+			});
+
+			client2.on('groupMessage', (fromUser, room, message) => {
+				message.should.equal(testMessage);
+				room.should.equal(room)
+
+				// Disconnect the clients and end the test.
+				client1.disconnect();
+				client2.disconnect();
+				done();
+			});
+		});
+	});
+
+	/*
+	 * @test
+	 *
 	 * This test asserts that the client receives an acknowledge message
 	 * after attempting to join a room.
 	 */
