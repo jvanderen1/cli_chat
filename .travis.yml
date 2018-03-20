@@ -9,4 +9,4 @@ cache:
 script:
   - npm test --prefix src/server
 after_success:
-  - npm run coverage
+  - npm run coverage --prefix src/server
