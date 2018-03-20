@@ -3,11 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "test": "nyc mocha Tests",
+    "coverage": "nyc report Tests --reporter=text-lcov | coveralls",
     "start": "node index.js"
   },
   "author": "",
@@ -23,7 +21,9 @@
     "socket.io": "*"
   },
   "devDependencies": {
-    "nyc": "^11.4.1",
+    "coveralls": "^3.0.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nyc": "^11.6.0",
     "should": "^13.2.1"
   }
 }
