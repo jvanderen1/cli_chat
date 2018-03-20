@@ -7,5 +7,5 @@ cache:
   directories:
     - "src/server/node_modules"
 script:
-  - ls -a . src src/server src/server/tests
+  - ls -a . src src/server src/server/Tests
   - npm test --prefix src/server
