@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "private": true
+  "private": true,
   "main": "index.js",
   "scripts": {
     "test": "nyc mocha",
