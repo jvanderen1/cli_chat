@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "repository": "https://github.com/jvanderen1/cli_chat.git",
+  "private": true
   "main": "index.js",
   "scripts": {
     "test": "nyc mocha",
