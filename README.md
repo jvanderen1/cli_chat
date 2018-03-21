@@ -9,7 +9,7 @@ This project is the culmination of work done by Joy Tan, Grant Savage, Joshua Va
 To install the required dependencies for both client and server run the install.sh shell script by running ```./install.sh```. You may need to change permissions on the file to run it. To do this run ```chmod 755 install.sh```.
 
 ## Running the System
-In order to run the system and interact with it, a total of 3 terminal sessions (tabs) are needed. 1 to run the server and 1 to run 2 clients. Instructions on how to run on both the client and server are included in the README files under both the ```client``` and ```server``` directories under the ```src``` directory.
+In order to run the system and interact with it, a total of 3 terminal sessions (tabs) are needed. 1 to run the server and 1 to 2 run the clients. Instructions on how to run on both the client and server are included in the README files under both the ```client``` and ```server``` directories under the ```src``` directory.
 
 ## Running Tests
 ### Server Tests
