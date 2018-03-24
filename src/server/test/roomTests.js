@@ -38,8 +38,8 @@ describe('Room', () => {
 	 * Before the test starts, start the server.
 	 */
 	before(() => {
-		httpServer.start();
-	})
+		httpServer.start(3000);
+	});
 
 	/*
 	 * After the test is finished, stop the server

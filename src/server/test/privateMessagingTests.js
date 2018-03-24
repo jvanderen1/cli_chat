@@ -36,7 +36,7 @@ let options = {
  */
 describe('Client Private Message Passing', () => {
 	before(() => {
-		httpServer.start();
+		httpServer.start(3000);
 	});
 
 	after(() => {
