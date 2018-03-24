@@ -1,17 +1,28 @@
 {
-  "name": "jsclient",
+  "name": "client",
   "version": "1.0.0",
   "description": "",
+  "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "coverage": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "docstring": "^1.1.0",
     "pify": "^3.0.0",
     "readline": "^1.3.0",
     "socket.io-client": "^2.0.4",
     "webpack": "^3.11.0"
+  },
+  "devDependencies": {
+    "mock-stdin": "^0.3.1",
+    "coveralls": "^3.0.0",
+    "nyc": "^11.6.0",
+    "should": "^13.2.1",
+    "mocha": "^5.0.1"
   }
 }
