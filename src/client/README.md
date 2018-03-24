@@ -1,4 +1,4 @@
-# CLI Chat CLient
+# CLI Chat Client
 
 This folder contains the source for the client application of our CLI Chat System.
 
