@@ -114,7 +114,7 @@ module.exports = class Server {
     });
   }
 
-  start() {
+  start(port) {
     this.logger.info('Initializing Server...');
 
     /*
@@ -124,14 +124,13 @@ module.exports = class Server {
      * our server is starting. This block essentially starts the
      * kernel of our server.
      */
-    const PORT = 3000;
-    this.serverManager.http.listen(PORT, () => {
+    this.serverManager.http.listen(port, () => {
       this.logger.success('Server Started');
-      this.logger.warn('Listening on port ' + PORT + ' for connections...');
+      this.logger.warn('Listening on port ' + port + ' for connections...');
     });
   }
 
   stop() {
     this.serverManager.http.close();
   }
-}
+};

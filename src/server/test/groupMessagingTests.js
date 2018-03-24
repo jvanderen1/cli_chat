@@ -28,7 +28,7 @@ let options = {
 describe('Client Group Message Passing', () => {
 	before(() => {
 		httpServer.start();
-	})
+	});
 
 	after(() => {
 		httpServer.stop();

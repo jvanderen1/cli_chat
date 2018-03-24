@@ -9,7 +9,7 @@ let httpServer = new Server(false);
  * from the chai testing framework. Also pull in
  * the should interface for testing.
  */
-let should = require('should');
+//let should = require('should');
 
 /*
  * Pull in the socket.io client library
@@ -37,7 +37,7 @@ let options = {
 describe('Client Private Message Passing', () => {
 	before(() => {
 		httpServer.start();
-	})
+	});
 
 	after(() => {
 		httpServer.stop();
@@ -81,7 +81,7 @@ describe('Client Private Message Passing', () => {
 	 */
 	it('should receive acknowledge message when sending message to another user', (done) => {
 		// Create a test string to send
-		let testString = "Hello World!"
+		let testString = "Hello World!";
 
 		// Create a new client
 		let client1 = io.connect(socketURL, options);

@@ -6,4 +6,7 @@ const Server = require('./Server');
 /*
  * Instantiate new server and start the server
  */
-let server = new Server(true).start();
+if (require.main === module) {
+  let server = new Server(true);
+  server.start(3000);
+}
