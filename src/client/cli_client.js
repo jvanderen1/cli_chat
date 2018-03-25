@@ -57,6 +57,11 @@ class CLI_Client {
     this._options_map = this.createOptionsMap(Actions);
 
     /**
+     * Control variable for printing out prompt while client has selected option.
+     */
+    this._in_question = false;
+
+    /**
      * Used to bind all socket events to specific functions within the client.
      */
     this._bind_events();
@@ -94,12 +99,15 @@ class CLI_Client {
     this._socket.on('privateMessage', (fromUser, message) => {
       console.log('\n\n\tNew Message from ' + fromUser);
       console.log('\n\tContent: ' + message);
-      console.log();
 
       /**
        * Get user menu option choice.
        */
-      this.printPrompt();
+
+      if (!this._in_question)
+        this.printPrompt();
+      else
+        this._rl.prompt();
     });
     
     /**
@@ -111,7 +119,10 @@ class CLI_Client {
       console.log('\n\tContent: ' + message);
       console.log();
 
-      this.printPrompt();
+      if (!this._in_question)
+        this.printPrompt();
+      else
+        this._rl.prompt();
     });
 
     /**
@@ -135,6 +146,8 @@ class CLI_Client {
    */
   createNickname() {
 
+    this._in_question = true;
+
     this._rl.question('Nickname: ',
         (nickname) => {
           /**
@@ -153,6 +166,7 @@ class CLI_Client {
             this._nicknames_g = nickname;
             this._rl.setPrompt(`${nickname} > `);
             this.printPrompt();
+            this._in_question = false;
           }
         });
   }

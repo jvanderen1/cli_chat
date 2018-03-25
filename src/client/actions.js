@@ -47,6 +47,8 @@ let Actions = {
   createRoom() {
     /** Create Room */
 
+    this._in_question = true;
+
     this._rl.question('\nCreate room (Y/N)? ',
         (answer) => {
           if (answer === 'Y') {
@@ -67,6 +69,8 @@ let Actions = {
           else {
             this.printPrompt();
           }
+
+          this._in_question = false;
         });
   },
 
@@ -107,6 +111,9 @@ let Actions = {
        * User will enter the name of any existing room to join it or
        * enter 'NONE' to create a new room.
        */
+
+      this._in_question = true;
+
       this._rl.question('\nWhich room would you like to join? (NONE to create room) ',
           (room) => {
             if (this._rooms_g.indexOf(room) >= 0) {
@@ -123,6 +130,8 @@ let Actions = {
               console.log('\nInvalid room selection.');
               this.printPrompt();
             }
+
+            this._in_question = false;
           });
     }
   },
@@ -156,13 +165,15 @@ let Actions = {
     if (this._users_g.length === 1) {
       console.log('\nThere are no other users to message.');
       this.printPrompt();
-      return;
     }
 
     /**
      * Send private message if user is not currently in a room
      */
-    if (this._currentRoom === null) {
+    else if (this._currentRoom === null) {
+
+      this._in_question = true;
+
       this._rl.question('\nWhich user would you like to send a message to? ',
           (user) => {
             /**
@@ -172,7 +183,7 @@ let Actions = {
             if (user < 1 || user > this._users_g.length) {
               console.log('\nInvalid user selection.\n');
               this.printPrompt();
-              return;
+              this._in_question = false;
             }
 
             /**
@@ -193,6 +204,7 @@ let Actions = {
                          * Display option prompt again.
                          */
                         this.printPrompt();
+                        this._in_question = false;
                       });
                 });
           });
@@ -202,26 +214,32 @@ let Actions = {
      * Send group message to everyone in the room that the user is currently in
      */
     else {
-      /*
+      /**
        * Get the content of the message to send.
        */
+
+      this._in_question = true;
+
       this._rl.question('\nWhat is your message to ' + this._currentRoom + '? ',
           (message) => {
 
-            /**
-             * Send the room name of the user's current room and message body to the
-             * server for relaying to the desired room.
-             */
-            this._socket.emit('groupMessage', this._currentRoom,
-                message, (ack) => {
-                  console.log('\nMessage \"' + ack + '\" sent.\n');
+          /**
+           * Send the room name of the user's current room and message body to the
+           * server for relaying to the desired room.
+           */
 
-                  /**
-                   * Display option prompt again.
-                   */
-                  this.printPrompt();
-                });
+          this._socket.emit('groupMessage', this._currentRoom,
+              message, (ack) => {
+            console.log('\nMessage \"' + ack + '\" sent.\n');
+
+            /**
+             * Display option prompt again.
+             */
+            this.printPrompt();
           });
+
+          this._in_question = false;
+      });
     }
   },
 
