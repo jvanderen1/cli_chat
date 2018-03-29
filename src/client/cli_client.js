@@ -85,6 +85,14 @@ class CLI_Client {
     });
     
     /**
+     * When our client receives a rooms event, set the rooms_g variable equal
+     * to the new array of existing rooms.
+     */
+    this._socket.on('rooms', (rooms) => {
+      this._rooms_g = rooms;
+    });
+    
+    /**
      * When our client connects log it and display the menu options.
      */
     this._socket.on('connect', () => {

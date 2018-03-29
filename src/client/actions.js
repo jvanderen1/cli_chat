@@ -47,31 +47,42 @@ let Actions = {
   createRoom() {
     /** Create Room */
 
-    this._in_question = true;
+    /**
+     * User cannot join a room if already in a room.
+     */
+    if (this._currentRoom !== null) {
+      console.log('\nYou are already in room ' + this._currentRoom + '.');
+      console.log('Leave your current room in order to join another.');
+      this.printPrompt();
+    }
 
-    this._rl.question('\nCreate room (Y/N)? ',
-        (answer) => {
-          if (answer === 'Y') {
-            this._rl.question('\nName of room: ',
-                (room) => {
-                  if (room === 'NONE') {
-                    console.log('Invalid room name.');
-                  }
-                  else {
-                    this._socket.emit('joinRoom', room, (roomName) => {
-                      console.log("Joined room " + roomName);
-                    });
-                    this._currentRoom = room;
-                  }
-                  this.printPrompt();
-                });
-          }
-          else {
-            this.printPrompt();
-          }
+    else {    
+      this._in_question = true;
 
-          this._in_question = false;
-        });
+      this._rl.question('\nCreate room (Y/N)? ',
+          (answer) => {
+            if (answer === 'Y') {
+              this._rl.question('\nName of room: ',
+                  (room) => {
+                    if (room === 'NONE') {
+                      console.log('Invalid room name.');
+                    }
+                    else {
+                      this._socket.emit('joinRoom', room, (roomName) => {
+                        console.log("Joined room " + roomName);
+                      });
+                      this._currentRoom = room;
+                    }
+                    this.printPrompt();
+                  });
+            }
+            else {
+              this.printPrompt();
+            }
+
+            this._in_question = false;
+          });
+    }
   },
 
   /**
