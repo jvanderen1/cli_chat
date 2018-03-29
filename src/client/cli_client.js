@@ -89,6 +89,7 @@ class CLI_Client {
      */
     this._socket.on('connect', () => {
       console.log('App Connected!\n');
+      console.log('Disclaimer: This application is not fully secured and messages sent may be seen by other parties.\n');
       console.log('Current user ID: ' + this._socket.id);
       this.createNickname();
     });
