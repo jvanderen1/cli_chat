@@ -16,7 +16,7 @@ This will install the required packages and dependencies into a node_moduels fol
 Once NPM finishes installing packages, you can run
 
 ```
-node index.js
+npm start
 ```
 
 to start the application.
