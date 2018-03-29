@@ -89,7 +89,7 @@ class CLI_Client {
      * to the new array of existing rooms.
      */
     this._socket.on('rooms', (rooms) => {
-      this._rooms_g = rooms;
+      this._rooms_g = rooms[0];
     });
     
     /**
