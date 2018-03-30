@@ -130,9 +130,9 @@ let Actions = {
             if (this._rooms_g.indexOf(room) >= 0) {
               this._socket.emit('joinRoom', room, (roomName) => {
                 console.log("Joined room " + roomName);
+                 this.printPrompt();
               });
-              this._currentRoom = room;
-              this.printPrompt();
+              this._currentRoom = room; 
             }
             else if (room === 'NONE') {
               this.createRoom();
