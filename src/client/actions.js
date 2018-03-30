@@ -69,11 +69,11 @@ let Actions = {
                     }
                     else {
                       this._socket.emit('joinRoom', room, (roomName) => {
-                        console.log("Joined room " + roomName);
+                        console.log("\nJoined room " + roomName);
+                        this.printPrompt();
                       });
                       this._currentRoom = room;
                     }
-                    this.printPrompt();
                   });
             }
             else {
