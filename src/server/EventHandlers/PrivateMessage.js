@@ -40,7 +40,8 @@ module.exports = class PrivateMessage {
 		/*
 		 * Transmit the received message payload to the specified socket ID.
 		 */
-		this.socket.to(user).emit('privateMessage', this.socket.id, message);
+		if (user != this.socket.id)
+			this.socket.to(user).emit('privateMessage', this.socket.id, message);
 
 		/*
 		 * This acknowledge function essentially sends a message back to the client
