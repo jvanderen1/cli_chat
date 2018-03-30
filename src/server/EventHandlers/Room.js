@@ -25,6 +25,7 @@ module.exports = class Room {
     this.handlers = {
       joinRoom: this.joinRoom.bind(this),
       leaveRoom: this.leaveRoom.bind(this),
+      updateUsers: this.updateUsers.bind(this),
     };
   }
 
@@ -77,5 +78,9 @@ module.exports = class Room {
      * the room.
      */
     ack(roomName);
+  }
+
+  updateUsers() {
+    this.socketManager.updateUsers();
   }
 }

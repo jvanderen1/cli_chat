@@ -68,6 +68,12 @@ module.exports = class Server {
       this.socketManager.updateUsers();
 
       /*
+       * Call the update rooms method to send out the current
+       * list of available rooms to all clients.
+       */
+      this.socketManager.updateRooms();
+
+      /*
        * Bind the disconnect event to our SocketManager
        * instance and log that a user disconnected.
        */
@@ -83,6 +89,12 @@ module.exports = class Server {
          * of connected user socket IDs.
          */
         this.socketManager.updateUsers();
+
+        /*
+         * Call the update rooms method to send out the current
+         * list of available rooms to all clients.
+         */
+        this.socketManager.updateRooms();
       });
 
       /*

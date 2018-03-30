@@ -21,7 +21,7 @@ module.exports = class SocketManager {
 	constructor(io) {
 		this.io = io;
 		this.users = [];
- 	  this.rooms = [];
+ 	  	this.rooms = [];
 	}
 
 	/*
