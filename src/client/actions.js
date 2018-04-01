@@ -66,6 +66,7 @@ let Actions = {
                   (room) => {
                     if (room === 'NONE') {
                       console.log('Invalid room name.');
+                      this.printPrompt();
                     }
                     else {
                       this._socket.emit('joinRoom', room, (roomName) => {
