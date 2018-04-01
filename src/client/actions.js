@@ -52,7 +52,7 @@ let Actions = {
      */
     if (this._currentRoom !== null) {
       console.log('\nYou are already in room ' + this._currentRoom + '.');
-      console.log('Leave your current room in order to join another.');
+      console.log('Leave your current room in order to create another.');
       this.printPrompt();
     }
 
@@ -158,12 +158,12 @@ let Actions = {
       this._socket.emit('leaveRoom', this.room, (roomName) => {
         console.log("Left room.");
         this._currentRoom = null;
+        this.printPrompt();
       });
     }
     else
       console.log('\nYou are not currently in any rooms.');
-
-    this.printPrompt();
+    
   },
 
 
