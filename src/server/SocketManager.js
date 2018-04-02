@@ -1,9 +1,9 @@
-/*
+/**
  * CLI Chat
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
  * 
- * Updated: February 19. 2018 by Grant Savage
+ * Updated: April 1. 2018
  *
  * SocketManager.js
  * 
@@ -14,17 +14,18 @@
  * can easily switch implementations if needed.
  */
 
-module.exports = class SocketManager {
-	/*
+class SocketManager {
+
+	/**
 	 * Constructor takes in instance of socket.io class
 	 */
 	constructor(io) {
-		this.io = io;
-		this.users = [];
- 	  	this.rooms = [];
+    this.io = io;
+    this.users = [];
+    this.rooms = [];
 	}
 
-	/*
+	/**
 	 * This method takes in a string for a socket event
 	 * and callback to execute.
 	 */
@@ -32,7 +33,7 @@ module.exports = class SocketManager {
 		this.io.on(event, callback);
 	}
 
-	/*
+	/**
 	 * This method takes in a string for a socket event
 	 * and any multiple of arguments for data transmission.
 	 */
@@ -40,7 +41,7 @@ module.exports = class SocketManager {
 		this.io.emit(event, args);
 	}
 
-	/*
+	/**
 	 * This method gets the IDs of the currently connected
 	 * sockets and sets them equal to the users property 
 	 * of the SocketManager instance.
@@ -49,7 +50,7 @@ module.exports = class SocketManager {
 		return this.users = Object.keys(this.io.of('/').connected);
 	}
 
-	/*
+	/**
 	 * Log and send out an event to all users with the updated
 	 * list of connected users.
 	 */
@@ -57,29 +58,35 @@ module.exports = class SocketManager {
 		this.emit('users', this.connectedUsers());
 	}
  
-  	/*
-   	*
-   	*/
-  	createdRooms() {
-    	var availableRooms = [];
-    	var rooms = this.io.sockets.adapter.rooms;
-    	if (rooms) {
-      		for (var room in rooms) {
-       			if (!rooms[room].hasOwnProperty(room)) {
-          			availableRooms.push(room);
-        		}
-      		}
-    	}
+  /**
+ 	 *
+ 	 */
+ 	createdRooms() {
+   	var availableRooms = [];
+   	var rooms = this.io.sockets.adapter.rooms;
+   	if (rooms) {
+   		for (var room in rooms) {
+   			if (!rooms[room].hasOwnProperty(room)) {
+     			availableRooms.push(room);
+    		}
+     	}
+   	}
     
-    	this.rooms = availableRooms.filter((el) => !this.users.includes(el));
+   	this.rooms = availableRooms.filter((el) => !this.users.includes(el));
     
-    	return this.rooms;
+   	return this.rooms;
   }
   
-  /*
-   *
+  /**
+   * Log and send out an event to all users with the updated
+	 * list of created rooms.
    */
   updateRooms() {
     this.emit('rooms', this.createdRooms());
   }
 }
+
+/**
+ * Exports class for usage.
+ */
+module.exports = SocketManager;

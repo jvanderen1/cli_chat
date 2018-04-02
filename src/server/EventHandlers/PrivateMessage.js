@@ -1,4 +1,4 @@
-/*
+/**
  * CLI Chat
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
@@ -13,8 +13,9 @@
  * for sending peer to peer messages between clients.
  */
 
-module.exports = class PrivateMessage {
-	/*
+class PrivateMessage {
+
+	/**
 	 * Constructor takes in a Socket instance and 
 	 * Log instance.
 	 */
@@ -26,24 +27,24 @@ module.exports = class PrivateMessage {
 		}
 	}
 
-	/*
+	/**
 	 * This method essentially binds all the events that need to
 	 * be binded for private messaging to the passed in socket instance.
 	 */
 	privateMessage(user, message, ack) {
-		/*
+		/**
 		 * Log the event in the server console.
 		 */
 		this.logger.info(['Received message from', this.socket.id, 'with content:',
 			message, 'that will be transmitted to', user].join(' '));
 
-		/*
+		/**
 		 * Transmit the received message payload to the specified socket ID.
 		 */
 		if (user != this.socket.id)
 			this.socket.to(user).emit('privateMessage', this.socket.id, message);
 
-		/*
+		/**
 		 * This acknowledge function essentially sends a message back to the client
 		 * acknowleding that the server received the send event. This particular
 		 * ack sends the message body back to the client.
@@ -51,3 +52,8 @@ module.exports = class PrivateMessage {
 		ack(message);
 	}
 }
+
+/**
+ * Exports class for usage.
+ */
+module.exports = PrivateMessage;

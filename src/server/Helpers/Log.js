@@ -1,4 +1,4 @@
-/*
+/**
  * CLI Chat
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
@@ -14,20 +14,21 @@
  * colors to methods. 
  */
 
-/*
+/**
  * Pull in the colors package
  */
 const colors = require('colors');
 
 class Log {
-	/*
+	
+  /**
 	 * Get application debug state
 	 */
 	constructor(debugOn) {
 		this.debugOn = debugOn;
 	}
 
-	/*
+	/**
 	 * Abstract log function that checks
 	 * whether application debug is enabled
 	 * and logging should be executed
@@ -37,7 +38,7 @@ class Log {
 			console.log(message)
 	}
 
-	/*
+	/**
 	 * The four following functions provide wrappers
 	 * for printing out output to the console in
 	 * different colors.
@@ -60,7 +61,7 @@ class Log {
 	}
 }
 
-/*
+/**
  * Export the Log class
  */
 module.exports = Log;

@@ -3,7 +3,7 @@
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
  * 
- * Updated: March 23. 2018
+ * Updated: April 1. 2018
  *
  * cli_client.js
  * 
@@ -93,7 +93,7 @@ class CLI_Client {
     });
     
     /**
-     * When our client connects log it and display the menu options.
+     * When our client connects, log it and display the menu options.
      */
     this._socket.on('connect', () => {
       console.log('App Connected!\n');
@@ -111,6 +111,7 @@ class CLI_Client {
 
       /**
        * Get user menu option choice.
+       * Only print the prompt if user is not currently in a question.
        */
 
       if (!this._in_question)
@@ -120,7 +121,8 @@ class CLI_Client {
     });
     
     /**
-     * When our client receives a new group message, display who it is from and the message body.
+     * When our client receives a new group message, display who it is from, what room it is to,
+     * and the message body.
      */
     this._socket.on('groupMessage', (fromUser, roomName, message) => {
       console.log('\n\n\tNew Message from ' + fromUser);

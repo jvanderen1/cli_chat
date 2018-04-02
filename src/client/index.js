@@ -3,16 +3,23 @@
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
  *
- * Updated: March 23. 2018
+ * Updated: April 1. 2018
  *
- * index.js
+ * server/index.js
  *
- * This file serves as our client instantiation. When run,
- * this application creates a client-side application for use.
+ * This file serves as our server instantiation. When run,
+ * this application creates a server-side application for use.
  */
 
-const CLI_Client = require('./cli_client');
+/**
+ * Pull in server module
+ */
+const Server = require('./Server');
 
+/**
+ * Instantiate new server and start the server on the specified port 
+ */
 if (require.main === module) {
-  let cli_client = new CLI_Client('http://localhost:3000');
+  let server = new Server(true);
+  server.start(3000);
 }

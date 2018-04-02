@@ -3,7 +3,7 @@
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
  *
- * Updated: March 23. 2018
+ * Updated: April 1. 2018
  *
  * actions.js
  *
@@ -21,8 +21,17 @@ let Actions = {
   listUsers() {
     /** List Current Online Users */
 
+    /**
+     * The function console.log prints the given string to the console.
+     */
     console.log('\nList of online users:\n');
 
+    /**
+     * If the length of the array users_g is 1 then there is only one user
+     * connected.
+     * If there is more than one user connected, print every element of the
+     * array, displaying all the users.
+     */
     if (this._users_g.length === 1) {
       console.log('No other users online.');
     }
@@ -57,6 +66,10 @@ let Actions = {
     }
 
     else {    
+      /**
+       * The variable in_question prevents the program from printing the prompt
+       * when the user is in the middle of a question.
+       */
       this._in_question = true;
 
       this._rl.question('\nCreate room (Y/N)? ',
@@ -64,10 +77,18 @@ let Actions = {
             if (answer === 'Y') {
               this._rl.question('\nName of room: ',
                   (room) => {
+                    /**
+                     * NONE is the keyword for the user to create a room after
+                     * choosing the 'Join Room' option (refer to line 155) and
+                     * therefore cannot be a name for a room.
+                     */
                     if (room === 'NONE') {
                       console.log('Invalid room name.');
                       this.printPrompt();
                     }
+                    /**
+                     * Emit the event and display the success message.
+                     */
                     else {
                       this._socket.emit('joinRoom', room, (roomName) => {
                         console.log("\nJoined room " + roomName);
@@ -87,7 +108,7 @@ let Actions = {
   },
 
   /**
-   * Let user choose a room to join and put them in that room
+   * Let user choose a room to join and put them in that room.
    */
   joinRoom() {
     /** Join Room */
@@ -180,7 +201,7 @@ let Actions = {
     }
 
     /**
-     * Send private message if user is not currently in a room
+     * Send private message if user is not currently in a room.
      */
     else if (this._currentRoom === null) {
 

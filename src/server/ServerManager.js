@@ -1,4 +1,4 @@
-/*
+/**
  * CLI Chat
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
@@ -18,9 +18,10 @@
  * some basic socket.io client JS for testing.
  */
 
-module.exports = class ServerManager {
+class ServerManager {
+
 	constructor() {
-		/*
+		/**
 		 * Pull in and attach required modules to the
 		 * ServerManager class instance. 
 		 */
@@ -28,7 +29,7 @@ module.exports = class ServerManager {
 		this.http = require('http').Server(this.app);
 		this.io = require('socket.io')(this.http);
 
-		/*
+		/**
 		 * Send index.html when a request is made at
 		 * the root of the URL schema.
 		 */
@@ -37,3 +38,8 @@ module.exports = class ServerManager {
 		});
 	}
 }
+
+/**
+ * Exports class for usage.
+ */
+module.exports = ServerManager;
