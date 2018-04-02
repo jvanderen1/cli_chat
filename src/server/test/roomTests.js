@@ -11,9 +11,10 @@ const httpServer = new Server(false);
  */
 const should = require('should');
 
-/*
- * Pull in the socket.io client library
- * for mocking clients.
+/**
+ * Pull in the socket.io client library for mocking
+ * clients (create a fake client so that server can
+ * perform as if there is a real client).
  */
 const io = require('socket.io-client');
 

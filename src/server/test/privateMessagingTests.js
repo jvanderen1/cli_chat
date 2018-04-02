@@ -1,5 +1,5 @@
-/*
- * Pull in the 
+/**
+ * Pull in the Server class and instantiate a new isntance.
  */
 const Server = require('../Server');
 let httpServer = new Server(false);
@@ -11,9 +11,10 @@ let httpServer = new Server(false);
  */
 //let should = require('should');
 
-/*
- * Pull in the socket.io client library
- * for mocking clients.
+/**
+ * Pull in the socket.io client library for mocking
+ * clients (create a fake client so that server can
+ * perform as if there is a real client).
  */
 let io = require('socket.io-client');
 

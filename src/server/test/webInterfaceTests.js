@@ -13,9 +13,10 @@ const should = require('should');
 const expect = require('chai').expect;
 const request = require('request');
 
-/*
- * Pull in the socket.io client library
- * for mocking clients.
+/**
+ * Pull in the socket.io client library for mocking
+ * clients (create a fake client so that server can
+ * perform as if there is a real client).
  */
 const io = require('socket.io-client');
 
