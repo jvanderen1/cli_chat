@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "node"
 install:
-  - ./install.sh
+  - travis_wait ./install.sh
 cache:
   directories:
     - "src/server/node_modules"
