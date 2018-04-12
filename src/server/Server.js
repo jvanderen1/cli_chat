@@ -48,6 +48,9 @@ class Server {
     this.serverManager = new ServerManager();
     this.socketManager = new SocketManager(this.serverManager.io);
 
+    /**
+     * Bind the all events to server and new clients.
+     */
     this.bindEvents();
   }
 
@@ -67,12 +70,6 @@ class Server {
       this.logger.info('User Connected with ID of ' + socket.id);
 
       /**
-       * Call the update users method to send out the updated list
-       * of connected user socket IDs.
-       */
-      this.socketManager.updateUsers();
-
-      /**
        * Call the update rooms method to send out the current
        * list of available rooms to all clients.
        */
@@ -90,11 +87,10 @@ class Server {
         this.logger.error('User Disconnected with ID of ' + socket.id);
 
         /**
-         * Call the update users method to send out the updated list
-         * of connected user socket IDs.
+         * Remove the user from the current users array.
          */
-        this.socketManager.updateUsers();
-
+        this.socketManager.removeUser(socket.id);
+        
         /**
          * Call the update rooms method to send out the current
          * list of available rooms to all clients.
@@ -131,6 +127,11 @@ class Server {
     });
   }
 
+  /**
+   * This method takes in the desired port to run the server on
+   * and starts listening for http/websocket connections on that
+   * port.
+   */
   start(port) {
     this.logger.info('Initializing Server...');
 
@@ -147,6 +148,9 @@ class Server {
     });
   }
 
+  /**
+   * This method stops the server.
+   */
   stop() {
     this.serverManager.http.close();
   }

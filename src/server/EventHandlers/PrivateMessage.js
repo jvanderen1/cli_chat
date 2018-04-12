@@ -23,7 +23,7 @@ class PrivateMessage {
 		this.socket = socket;
 		this.logger = logger;
 		this.handlers = {
-			privateMessage: this.privateMessage.bind(this)
+			privateMessage: this.privateMessage.bind(this),
 		}
 	}
 

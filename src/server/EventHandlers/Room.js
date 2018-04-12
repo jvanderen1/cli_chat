@@ -27,7 +27,34 @@ class Room {
       joinRoom: this.joinRoom.bind(this),
       leaveRoom: this.leaveRoom.bind(this),
       updateUsers: this.updateUsers.bind(this),
+      nickname: this.nickname.bind(this)
     };
+  }
+
+  /**
+   * This binds the callback to the even used for 
+   * registering a nickname with the system.
+   */
+  nickname(nickname, ack) {
+    // Create an object with the socket id and selected nickname
+    var user = {
+      id: this.socket.id,
+      nickname: nickname
+    }
+
+    // TODO Error checking and existing username checking
+
+    // Push the new user onto the current users array.
+    this.socketManager.users.push(user);
+
+    // Log the nickname regsiterration event
+    this.logger.info([user.nickname, ' registered as a nickname.'].join(' '));
+
+    // Send out the updated list of online users
+    this.socketManager.updateUsers();
+
+    // Call the acknowledge callback and pass the nickname
+    ack(nickname);
   }
 
   /**

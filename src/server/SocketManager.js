@@ -20,9 +20,9 @@ class SocketManager {
 	 * Constructor takes in instance of socket.io class
 	 */
 	constructor(io) {
-    this.io = io;
-    this.users = [];
-    this.rooms = [];
+	    this.io = io;
+	    this.users = [];
+	    this.rooms = [];
 	}
 
 	/**
@@ -42,24 +42,15 @@ class SocketManager {
 	}
 
 	/**
-	 * This method gets the IDs of the currently connected
-	 * sockets and sets them equal to the users property 
-	 * of the SocketManager instance.
-	 */
-	connectedUsers() {
-		return this.users = Object.keys(this.io.of('/').connected);
-	}
-
-	/**
 	 * Log and send out an event to all users with the updated
 	 * list of connected users.
 	 */
 	updateUsers() {
-		this.emit('users', this.connectedUsers());
+		this.emit('users', this.users);
 	}
  
-  /**
- 	 *
+  	/**
+ 	 * Get a list of all created rooms
  	 */
  	createdRooms() {
    	var availableRooms = [];
@@ -72,6 +63,9 @@ class SocketManager {
      	}
    	}
     
+    /**
+     * Filter out the users our of the list of rooms
+     */
    	this.rooms = availableRooms.filter((el) => !this.users.includes(el));
     
    	return this.rooms;
@@ -83,6 +77,26 @@ class SocketManager {
    */
   updateRooms() {
     this.emit('rooms', this.createdRooms());
+  }
+
+  /**
+   * Remove a user from the current users array
+   */
+  removeUser(id) {
+  	/**
+  	 * Get the user by ID
+  	 */
+  	let user = this.users.find(u => u.id === id);
+
+  	/**
+  	 * Remove the user from the users array.
+  	 */
+  	this.users.splice(this.users.indexOf(user),1);
+
+  	/**
+  	 * Send out the list of updated users.
+  	 */
+  	this.updateUsers();
   }
 }
 
