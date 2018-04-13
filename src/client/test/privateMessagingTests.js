@@ -118,34 +118,41 @@ describe('Client Send Private Message Action', () => {
     let usersEventTriggered = false;
 
     /**
+     * Go here when a new list of users is generated in client1
+     */
+    client1._socket.on('users', () => {
+
+      if (!usersEventTriggered) {
+        usersEventTriggered = true;
+
+        /**
+         * 5:  Send Message to User/Room
+         */
+        this.stdin.send("5\r");
+
+        /**
+         * Which user would you like to send a message to? (client2 -> 2)
+         */
+        this.stdin.send("2\r");
+
+        /**
+         * What is your message to 2?
+         */
+        this.stdin.send("test\r");
+
+        done();
+      }
+    });
+
+    /**
      * Go here when client2 finishes connecting.
      */
     client2.on('connect', () => {
-
       /**
-       * Go here when a new list of users is generated in client1
+       * Create mock nickname for mock client.
        */
-      client1._socket.on('users', () => {
-        if (!usersEventTriggered) {
-          usersEventTriggered = true;
-
-          /**
-           * 5:  Send Message to User/Room
-           */
-          this.stdin.send("5\r");
-
-          /**
-           * Which user would you like to send a message to? (client2 -> 2)
-           */
-          this.stdin.send("2\r");
-
-          /**
-           * What is your message to 2?
-           */
-          this.stdin.send("test\r");
-
-          done();
-        }
+      client2.emit('nickname', 'foo', (nn) => {
+        nn.should.equal('foo', 'nicknames should be retained');
       });
     });
   });

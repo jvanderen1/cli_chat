@@ -14,6 +14,13 @@ let client1;
 let io = require('socket.io-client');
 
 /**
+ * Pull in the assertion and expect interfaces
+ * from the chai testing framework. Also pull in
+ * the should interface for testing.
+ */
+const should = require('should');
+
+/**
  * Define out the URL the mock clients
  * should connect to and the options those
  * clients should use.
@@ -121,23 +128,30 @@ describe('Client List Users Action', () => {
     let usersEventTriggered = false;
 
     /**
+     * Go here when a new list of users is generated in client1
+     */
+    client1._socket.on('users', () => {
+
+      if (!usersEventTriggered) {
+        usersEventTriggered = true;
+
+        /**
+         * 1:  List Current Online Users
+         */
+        this.stdin.send("1\r");
+        done();
+      }
+    });
+
+    /**
      * Go here when client2 finishes connecting.
      */
     client2.on('connect', () => {
-
       /**
-       * Go here when a new list of users is generated in client1
+       * Create mock nickname for mock client.
        */
-      client1._socket.on('users', () => {
-        if (!usersEventTriggered) {
-          usersEventTriggered = true;
-
-          /**
-           * 1:  List Current Online Users
-           */
-          this.stdin.send("1\r");
-          done();
-        }
+      client2.emit('nickname', 'foo', (nn) => {
+        nn.should.equal('foo', 'nicknames should be retained');
       });
     });
   });
