@@ -106,7 +106,7 @@ class CLI_Client {
      * When our client receives a new private message, display who it is from and the message body.
      */
     this._socket.on('privateMessage', (fromUser, message) => {
-      console.log('\n\n\tNew Message from ' + fromUser);
+      console.log('\n\n\tNew Message from ' + this._users_g.find(u => u.id === fromUser).nickname);
       console.log('\n\tContent: ' + message);
 
       /**
@@ -125,7 +125,7 @@ class CLI_Client {
      * and the message body.
      */
     this._socket.on('groupMessage', (fromUser, roomName, message) => {
-      console.log('\n\n\tNew Message from ' + fromUser);
+      console.log('\n\n\tNew Message from ' + this._users_g.find(u => u.id === fromUser).nickname);
       console.log('\n\tTo room: ' + roomName);
       console.log('\n\tContent: ' + message);
       console.log();
@@ -175,9 +175,12 @@ class CLI_Client {
              * Sets nickname for user.
              */
             this._nicknames_g = nickname;
-            this._rl.setPrompt(`${nickname} > `);
-            this.printPrompt();
-            this._in_question = false;
+
+            this._socket.emit('nickname', nickname, (nn) => {
+              this._rl.setPrompt(`${nn} > `);
+              this.printPrompt();
+              this._in_question = false;
+            })
           }
         });
   }
@@ -260,7 +263,6 @@ class CLI_Client {
      * If the user selected to display the list of online users,
      * iterate over the array of users and display them to the console.
      */
-
     if (this._options_map.has(+choice)) {
       /**
        * Select correct function from the options available.

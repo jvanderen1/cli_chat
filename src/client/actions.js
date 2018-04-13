@@ -37,8 +37,8 @@ let Actions = {
     }
     else {
       for (let i = 0; i < this._users_g.length; i++) {
-        if (this._users_g[i] !== this._socket.id) {
-          console.log(i + 1 + '. ' + this._users_g[i]);
+        if (this._users_g[i].id !== this._socket.id) {
+          console.log(i + 1 + '. ' + this._users_g[i].nickname);
         }
       }
     }
@@ -217,19 +217,20 @@ let Actions = {
               console.log('\nInvalid user selection.\n');
               this.printPrompt();
               this._in_question = false;
+              return;
             }
 
             /**
              * Get the content of the message to send.
              */
-            this._rl.question('\nWhat is your message to ' + user + '? ',
+            this._rl.question('\nWhat is your message to ' + this._users_g[user - 1].nickname + '? ',
                 (message) => {
                   /**
                    * Send the id of the desired user and message body to the
                    * server for relaying to the desired user.
                    */
 
-                  this._socket.emit('privateMessage', this._users_g[user - 1],
+                  this._socket.emit('privateMessage', this._users_g[user - 1].id,
                       message, (ack) => {
                         console.log('\nMessage \"' + ack + '\" sent.\n');
 

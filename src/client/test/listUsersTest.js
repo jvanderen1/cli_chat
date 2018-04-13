@@ -5,7 +5,7 @@ const Server = require('../../server/Server');
 let httpServer = new Server(false);
 
 const CLI_Client = require('../cli_client');
-let client1 = CLI_Client;
+let client1;
 
 /**
  * Pull in the socket.io client library
