@@ -2,11 +2,11 @@
  * CLI Chat
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
- * 
+ *
  * Updated: April 1. 2018
  *
  * cli_client.js
- * 
+ *
  * This file serves as our client application. When run,
  * this application connects to our backend server and allows
  * the relaying of messages to other clients connected.
@@ -30,9 +30,8 @@ class CLI_Client {
      * the user is in.
      */
     // TODO: Implement user class to replace this
-    this._users_g = [];
-    this._nicknames_g = [];
-    this._rooms_g = [];
+    this._users = [];
+    this._rooms = [];
     this._currentRoom = null;
 
     /**
@@ -81,23 +80,24 @@ class CLI_Client {
      * to the new array of online users.
      */
     this._socket.on('users', (users) => {
-      this._users_g = users[0];
+      this._users = users[0];
     });
-    
+
     /**
      * When our client receives a rooms event, set the rooms_g variable equal
      * to the new array of existing rooms.
      */
     this._socket.on('rooms', (rooms) => {
-      this._rooms_g = rooms[0];
+      this._rooms = rooms[0];
     });
-    
+
     /**
      * When our client connects, log it and display the menu options.
      */
     this._socket.on('connect', () => {
       console.log('App Connected!\n');
-      console.log('Disclaimer: This application is not fully secured and messages sent may be seen by other parties.\n');
+      console.log(
+          'Disclaimer: This application is not fully secured and messages sent may be seen by other parties.\n');
       console.log('Current user ID: ' + this._socket.id);
       this.createNickname();
     });
@@ -106,26 +106,27 @@ class CLI_Client {
      * When our client receives a new private message, display who it is from and the message body.
      */
     this._socket.on('privateMessage', (fromUser, message) => {
-      console.log('\n\n\tNew Message from ' + this._users_g.find(u => u.id === fromUser).nickname);
+      console.log('\n\n\tNew Message from ' +
+          this._users.find(u => u.id === fromUser).nickname);
       console.log('\n\tContent: ' + message);
 
       /**
        * Get user menu option choice.
        * Only print the prompt if user is not currently in a question.
        */
-
       if (!this._in_question)
         this.printPrompt();
       else
         this._rl.prompt();
     });
-    
+
     /**
      * When our client receives a new group message, display who it is from, what room it is to,
      * and the message body.
      */
     this._socket.on('groupMessage', (fromUser, roomName, message) => {
-      console.log('\n\n\tNew Message from ' + this._users_g.find(u => u.id === fromUser).nickname);
+      console.log('\n\n\tNew Message from ' +
+          this._users.find(u => u.id === fromUser).nickname);
       console.log('\n\tTo room: ' + roomName);
       console.log('\n\tContent: ' + message);
       console.log();
@@ -159,30 +160,13 @@ class CLI_Client {
 
     this._in_question = true;
 
-    this._rl.question('Nickname: ',
-        (nickname) => {
-          /**
-           * Check every element of the this._nicknames_g array to see if the nickname is
-           * already taken by another user.
-           */
-          if (this._nicknames_g.indexOf(nickname) >= 0) {
-            console.log('Nickname already taken. Try another.');
-            this.createNickname();
-          }
-
-          else {
-            /**
-             * Sets nickname for user.
-             */
-            this._nicknames_g = nickname;
-
-            this._socket.emit('nickname', nickname, (nn) => {
-              this._rl.setPrompt(`${nn} > `);
-              this.printPrompt();
-              this._in_question = false;
-            })
-          }
-        });
+    this._rl.question('Nickname: ', (nickname) => {
+      this._socket.emit('nickname', nickname, (nn) => {
+        this._rl.setPrompt(`${nn} > `);
+        this.printPrompt();
+        this._in_question = false;
+      });
+    });
   }
 
   /**
@@ -204,7 +188,8 @@ class CLI_Client {
      * function referenced.
      */
     for (let option in options_set) {
-      options_map.set(i, [options_set[option].__doc__, () => { this[option](); }]);
+      options_map.set(i,
+          [options_set[option].__doc__, () => { this[option](); }]);
       i++;
     }
 
@@ -224,7 +209,7 @@ class CLI_Client {
      */
     return readline.createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
   }
 
@@ -240,13 +225,13 @@ class CLI_Client {
     /**
      * Get the user's menu option.
      */
-    console.log("\nOptions:\n");
+    console.log('\nOptions:\n');
     for (const [key, value] of this._options_map) {
       console.log([key, value[0]].join(': '));
     }
 
     console.log();
-    console.log("What would you like to do? ");
+    console.log('What would you like to do? ');
     this._rl.prompt();
   }
 

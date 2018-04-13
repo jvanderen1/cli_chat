@@ -32,13 +32,13 @@ let Actions = {
      * If there is more than one user connected, print every element of the
      * array, displaying all the users.
      */
-    if (this._users_g.length === 1) {
+    if (this._users.length === 1) {
       console.log('No other users online.');
     }
     else {
-      for (let i = 0; i < this._users_g.length; i++) {
-        if (this._users_g[i].id !== this._socket.id) {
-          console.log(i + 1 + '. ' + this._users_g[i].nickname);
+      for (let i = 0; i < this._users.length; i++) {
+        if (this._users[i].id !== this._socket.id) {
+          console.log(i + 1 + '. ' + this._users[i].nickname);
         }
       }
     }
@@ -116,7 +116,7 @@ let Actions = {
     /**
      * Prompt user to create room if there aren't any existing rooms.
      */
-    if (this._rooms_g.length === 0) {
+    if (this._rooms.length === 0) {
       console.log('\nNo existing rooms.');
       this.createRoom();
     }
@@ -132,12 +132,12 @@ let Actions = {
 
     else {
       /**
-       * Print every element of the this._rooms_g array to list the
+       * Print every element of the this._rooms array to list the
        * existing rooms.
        */
       console.log('\nExisting rooms: ');
-      for (let i = 0; i < this._rooms_g.length; i++) {
-        console.log(this._rooms_g[i]);
+      for (let i = 0; i < this._rooms.length; i++) {
+        console.log(this._rooms[i]);
       }
 
       /**
@@ -149,7 +149,7 @@ let Actions = {
 
       this._rl.question('\nWhich room would you like to join? (NONE to create room) ',
           (room) => {
-            if (this._rooms_g.indexOf(room) >= 0) {
+            if (this._rooms.indexOf(room) >= 0) {
               this._socket.emit('joinRoom', room, (roomName) => {
                 console.log("Joined room " + roomName);
                  this.printPrompt();
@@ -195,7 +195,7 @@ let Actions = {
   sendMessage() {
     /** Send Message to User/Room */
 
-    if (this._users_g.length === 1) {
+    if (this._users.length === 1) {
       console.log('\nThere are no other users to message.');
       this.printPrompt();
     }
@@ -213,7 +213,7 @@ let Actions = {
              * Check that the user's choice of user is in the range of the user
              * array.
              */
-            if (user < 1 || user > this._users_g.length) {
+            if (user < 1 || user > this._users.length) {
               console.log('\nInvalid user selection.\n');
               this.printPrompt();
               this._in_question = false;
@@ -223,14 +223,14 @@ let Actions = {
             /**
              * Get the content of the message to send.
              */
-            this._rl.question('\nWhat is your message to ' + this._users_g[user - 1].nickname + '? ',
+            this._rl.question('\nWhat is your message to ' + this._users[user - 1].nickname + '? ',
                 (message) => {
                   /**
                    * Send the id of the desired user and message body to the
                    * server for relaying to the desired user.
                    */
 
-                  this._socket.emit('privateMessage', this._users_g[user - 1].id,
+                  this._socket.emit('privateMessage', this._users[user - 1].id,
                       message, (ack) => {
                         console.log('\nMessage \"' + ack + '\" sent.\n');
 
