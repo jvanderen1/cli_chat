@@ -14,5 +14,5 @@
 const CLI_Client = require('./cli_client');
 
 if (require.main === module) {
-  let cli_client = new CLI_Client('http://localhost:3000');
+  let cli_client = new CLI_Client('http://localhost:3000', false);
 }

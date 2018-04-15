@@ -1,4 +1,4 @@
-const Server = require('../Server');
+const Server = require('../../src/server/Server');
 let httpServer = new Server(false);
 
 /*
@@ -26,7 +26,7 @@ let options = {
 	'force new connection' : true
 };
 
-describe('Client Group Message Passing', () => {
+describe('Client: Client Group Message Passing', () => {
 	before(() => {
 		httpServer.start(3000);
 	});

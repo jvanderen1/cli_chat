@@ -1,7 +1,7 @@
 /**
  * Pull in the Server class and instantiate a new isntance.
  */
-const Server = require('../Server');
+const Server = require('../../src/server/Server');
 let httpServer = new Server(false);
 
 /*
@@ -35,7 +35,7 @@ let options = {
  * This block of tests test the private message functionality
  * of the clients and server.
  */
-describe('Client Private Message Passing', () => {
+describe('Server: Client Private Message Passing', () => {
 	before(() => {
 		httpServer.start(3000);
 	});

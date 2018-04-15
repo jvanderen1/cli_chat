@@ -1,10 +1,10 @@
 /**
  * Pull in the Server and Client packages
  */
-const Server = require('../../server/Server');
+const Server = require('../../src/server/Server');
 let httpServer = new Server(false);
 
-const CLI_Client = require('../cli_client');
+const CLI_Client = require('../../src/client/cli_client');
 let client1 = CLI_Client;
 
 /**
@@ -19,7 +19,7 @@ let socketURL = 'http://localhost:3000';
  * This block of tests test the room functionality
  * of the clients.
  */
-describe('Client Room Action', () => {
+describe('Client: Room Action', () => {
 
   ///////////
   // SETUP //
@@ -39,7 +39,7 @@ describe('Client Room Action', () => {
     /**
      * Connect client to server.
      */
-    client1 = new CLI_Client(socketURL);
+    client1 = new CLI_Client(socketURL, true);
 
     /**
      * Creating nickname of 'foo' for our client

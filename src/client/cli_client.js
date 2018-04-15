@@ -14,7 +14,7 @@
 
 class CLI_Client {
 
-  constructor(IPAddress) {
+  constructor(IPAddress, debug) {
     /**
      * Pull in the socket.io client package and instantiate a new
      * instance of it passing in the address of our socket server.
@@ -23,6 +23,12 @@ class CLI_Client {
      * line.
      */
     this._socket = require('socket.io-client')(IPAddress);
+
+    /**
+     * DEBUG variable is used to determine whether or not to turn console log
+     * off or not. (i.e. Make it an empty function)
+     */
+    this.DEBUG = debug;
 
     /**
      * Array to keep track of the current online users, their
@@ -36,7 +42,7 @@ class CLI_Client {
 
     /**
      * Create the line reader interface and pass in standard input
-     * and output as parameters.
+     * and output as parameters (if DEBUG is off).
      */
     this._rl = this.createReadline();
 
@@ -205,12 +211,22 @@ class CLI_Client {
 
     /**
      * Create the line reader interface and pass in standard input
-     * and output as parameters.
+     * as a parameter when DEBUG is true.
      */
-    return readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
+    if (this.DEBUG)
+      return readline.createInterface({
+        input: process.stdin,
+      });
+
+    /**
+     * Create the line reader interface and pass in standard input
+     * and output as parameters when DEBUG is false.
+     */
+    else
+      return readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+      });
   }
 
   /////////////////////////////////////
@@ -225,13 +241,15 @@ class CLI_Client {
     /**
      * Get the user's menu option.
      */
-    console.log('\nOptions:\n');
-    for (const [key, value] of this._options_map) {
-      console.log([key, value[0]].join(': '));
-    }
+    if (!this.DEBUG) {
+      console.log('\nOptions:\n');
+      for (const [key, value] of this._options_map) {
+        console.log([key, value[0]].join(': '));
+      }
 
-    console.log();
-    console.log('What would you like to do? ');
+      console.log();
+      console.log('What would you like to do? ');
+    }
     this._rl.prompt();
   }
 

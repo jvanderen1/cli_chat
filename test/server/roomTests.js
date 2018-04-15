@@ -1,7 +1,7 @@
 /*
  * Pull in the Server class and instantiate a new isntance.
  */
-const Server = require('../Server');
+const Server = require('../../src/server/Server');
 const httpServer = new Server(false);
 
 /*
@@ -34,7 +34,7 @@ const options = {
  * of the system such as receiving an updated list of rooms
  * when joining or leaving a room.
  */
-describe('Room', () => {
+describe('Server: Room', () => {
 	/*
 	 * Before the test starts, start the server.
 	 */
@@ -59,7 +59,7 @@ describe('Room', () => {
 	 */
 	it('should receive updated list of rooms when room is created', (done) => {
 		// Create a test string to send
-		const roomName = "abc123"
+		const roomName = "abc123";
 
 		// Create a new client
 		const client1 = io.connect(socketURL, options);

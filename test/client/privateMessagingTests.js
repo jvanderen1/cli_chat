@@ -1,10 +1,10 @@
 /**
  * Pull in the Server and Client packages
  */
-const Server = require('../../server/Server');
+const Server = require('../../src/server/Server');
 let httpServer = new Server(false);
 
-const CLI_Client = require('../cli_client');
+const CLI_Client = require('../../src/client/cli_client');
 let client1 = CLI_Client;
 
 /**
@@ -30,7 +30,7 @@ let options = {
  * This block of tests test the private message functionality
  * of the clients and server.
  */
-describe('Client Send Private Message Action', () => {
+describe('Client: Send Private Message Action', () => {
 
   ///////////
   // SETUP //
@@ -50,7 +50,7 @@ describe('Client Send Private Message Action', () => {
     /**
      * Connect client to server.
      */
-    client1 = new CLI_Client(socketURL);
+    client1 = new CLI_Client(socketURL, true);
 
     /**
      * Creating nickname of 'foo' for our client

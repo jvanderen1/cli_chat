@@ -8,7 +8,5 @@ cache:
     - "src/server/node_modules"
     - "src/client/node_modules"
 script:
-  - npm test --prefix src/server
-  - npm test --prefix src/client
-  - npm run coverage --prefix src/server
-  - npm run coverage --prefix src/client
+  - npm test
+  - npm run coverage

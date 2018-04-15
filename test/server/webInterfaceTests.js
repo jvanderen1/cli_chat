@@ -1,7 +1,7 @@
 /*
  * Pull in the Server class and instantiate a new isntance.
  */
-const Server = require('../Server');
+const Server = require('../../src/server/Server');
 const httpServer = new Server(false);
 
 /*
@@ -36,7 +36,7 @@ const options = {
  * of the system such as receiving an updated list of rooms
  * when joining or leaving a room.
  */
-describe('Web Interface', () => {
+describe('Server: Web Interface', () => {
 	/*
 	 * Before the test starts, start the server.
 	 */
