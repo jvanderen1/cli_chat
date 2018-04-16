@@ -26,7 +26,6 @@ class Room {
     this.handlers = {
       joinRoom: this.joinRoom.bind(this),
       leaveRoom: this.leaveRoom.bind(this),
-      updateUsers: this.updateUsers.bind(this),
       nickname: this.nickname.bind(this)
     };
   }
@@ -123,13 +122,6 @@ class Room {
      * the room.
      */
     ack(roomName);
-  }
-
-  /**
-   * Update the list of connected users.
-   */
-  updateUsers() {
-    this.socketManager.updateUsers();
   }
 }
 
