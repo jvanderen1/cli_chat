@@ -53,23 +53,23 @@ class SocketManager {
  	 * Get a list of all created rooms
  	 */
  	createdRooms() {
-   	var availableRooms = [];
-   	var rooms = this.io.sockets.adapter.rooms;
-   	if (rooms) {
-   		for (var room in rooms) {
-   			if (!rooms[room].hasOwnProperty(room)) {
-     			availableRooms.push(room);
-    		}
-     	}
-   	}
-    
-    /**
-     * Filter out the users our of the list of rooms
-     */
-   	this.rooms = availableRooms.filter((el) => !this.users.includes(el));
-    
-   	return this.rooms;
-  }
+		var availableRooms = [];
+		var rooms = this.io.sockets.adapter.rooms;
+		if (rooms) {
+			for (var room in rooms) {
+				if (!rooms[room].hasOwnProperty(room)) {
+					availableRooms.push(room);
+				}
+			}
+		}
+		
+		/**
+		 * Filter out the users our of the list of rooms
+		 */
+		this.rooms = availableRooms.filter((el) => el.id === null);
+		
+		return this.rooms;
+	}
   
   /**
    * Log and send out an event to all users with the updated
