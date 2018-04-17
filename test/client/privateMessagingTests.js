@@ -164,8 +164,119 @@ describe('Client: Send Private Message Action', () => {
    * the receivers side. The test fails if the test fails to complete within
    * 2 seconds.
    */
-  it('should send the correct message', (done) => {
-    // TODO: Need way to intercept stdout
-    done();
+  it('should receive incoming messages', (done) => {
+    /**
+     * Creating 2nd mock client
+     */
+    let client2 = io.connect(socketURL, options);
+
+    /**
+     * String variable to check correct message
+     * @type {string}
+     */
+    let testMessage = 'test message';
+
+    /**
+     * Boolean variable to prevent multiple 'done()' calls.
+     * @type {boolean}
+     */
+    let usersEventTriggered = false;
+
+    /**
+     * Go here when a new list of users is generated in client1
+     */
+    client1._socket.on('privateMessage', (fromUser, message) => {
+
+      if (!usersEventTriggered) {
+        usersEventTriggered = true;
+
+        message.should.equal(testMessage);
+
+        done();
+      }
+    });
+
+    /**
+     * String variable to check correct nickname
+     * @type {string}
+     */
+    let testNickname = 'foo';
+
+    /**
+     * Allows client2 to connect to the server with a nickname
+     */
+    client2.on('connect', () => {
+      client2.emit('nickname', testNickname, (nn) => {
+        nn.should.equal(testNickname);
+        client2.emit('privateMessage', client1._socket.id, testMessage, (message) =>{
+          message.should.equal(testMessage);
+        });
+      });
+    });
+  });
+
+
+  /**
+   * @test
+   *
+   * This test asserts that the message a mock client sends will be the same on
+   * the receivers side (while the receiver is in a question). The test fails
+   * if the test fails to complete within 2 seconds.
+   */
+  it('should receive incoming messages while in question', (done) => {
+    /**
+     * Creating 2nd mock client
+     */
+    let client2 = io.connect(socketURL, options);
+
+    /**
+     * String variable to check correct message
+     * @type {string}
+     */
+    let testMessage = 'test message';
+
+    /**
+     * Boolean variable to prevent multiple 'done()' calls.
+     * @type {boolean}
+     */
+    let usersEventTriggered = false;
+
+    /**
+     * Go here when a new list of users is generated in client1
+     */
+    client1._socket.on('privateMessage', (fromUser, message) => {
+
+      if (!usersEventTriggered) {
+        usersEventTriggered = true;
+
+        message.should.equal(testMessage);
+
+        done();
+      }
+    });
+
+    /**
+     * String variable to check correct nickname
+     * @type {string}
+     */
+    let testNickname = 'foo';
+
+    /**
+     * Allows client2 to connect to the server with a nickname
+     */
+    client2.on('connect', () => {
+      client2.emit('nickname', testNickname, (nn) => {
+        nn.should.equal(testNickname);
+
+        /**
+         * Prepares message to be sent
+         */
+        this.stdin.send('5\r');
+
+        client2.emit('privateMessage', client1._socket.id, testMessage, (message) =>{
+          message.should.equal(testMessage);
+        });
+      });
+    });
   });
 });
