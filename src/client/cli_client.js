@@ -82,7 +82,7 @@ class CLI_Client {
    */
   _bind_events() {
     /**
-     * When our client receives a users event, set the users_g variable equal
+     * When our client receives a users event, set the users variable equal
      * to the new array of online users.
      */
     this._socket.on('users', (users) => {
@@ -90,7 +90,7 @@ class CLI_Client {
     });
 
     /**
-     * When our client receives a rooms event, set the rooms_g variable equal
+     * When our client receives a rooms event, set the rooms variable equal
      * to the new array of existing rooms.
      */
     this._socket.on('rooms', (rooms) => {

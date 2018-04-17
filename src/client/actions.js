@@ -177,7 +177,7 @@ let Actions = {
     /** Leave Room */
 
     if (this._currentRoom !== null) {
-      this._socket.emit('leaveRoom', this.room, (roomName) => {
+      this._socket.emit('leaveRoom', this._currentRoom, (roomName) => {
         console.log("Left room.");
         this._currentRoom = null;
         this.printPrompt();
