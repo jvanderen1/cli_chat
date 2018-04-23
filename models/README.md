@@ -10,9 +10,9 @@ Here are the included models:
 
 ![Use Case Model](Use%20Case%20Model.PNG)
 
-* [Server Class Diagram](Class%20Diagram.PNG)
+* [Server Class Diagram](Class%20Diagram.png)
 
-![Server Class Diagram](Class%20Diagram.PNG)
+![Server Class Diagram](Class%20Diagram.png)
 
 * [Sequence Diagram 1](Sequence%20Diagram%201.PNG)
 
