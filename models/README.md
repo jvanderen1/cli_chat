@@ -16,7 +16,7 @@ Here are the included models:
 
 * [Client Class Diagram](Client%20Class%20Diagram.png)
 
-[Client Class Diagram](Client%20Class%20Diagram.png)
+![Client Class Diagram](Client%20Class%20Diagram.png)
 
 * [Sequence Diagram 1](Sequence%20Diagram%201.PNG)
 
