@@ -36,8 +36,7 @@ class Server {
     /**
      * Instantiate a new Log class instance
      */
-    this.DEBUG = debug;
-    this.logger = new Log(this.DEBUG);
+    this.logger = new Log(debug);
 
     /**
      * Instantiate a new ServerManager class instance and 

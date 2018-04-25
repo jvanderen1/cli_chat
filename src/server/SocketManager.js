@@ -55,20 +55,27 @@ class SocketManager {
  	createdRooms() {
 		var availableRooms = [];
 		var rooms = this.io.sockets.adapter.rooms;
-		if (rooms) {
-			for (var room in rooms) {
-				if (!rooms[room].hasOwnProperty(room)) {
-					availableRooms.push(room);
-				}
+
+		for (var room in rooms) {
+			if (!rooms[room].hasOwnProperty(room)) {
+				availableRooms.push(room);
 			}
 		}
-		
+
+		rooms = [];
+
+		var users = Object.keys(this.io.sockets.sockets);
+
 		/**
 		 * Filter out the users our of the list of rooms
 		 */
-		this.rooms = availableRooms.filter((el) => el.id === null);
+		availableRooms.forEach((room) => {
+			if (!users.includes(room)) {
+				rooms.push(room);
+			}
+		});
 		
-		return this.rooms;
+		return this.rooms = rooms;
 	}
   
   /**
@@ -87,7 +94,6 @@ class SocketManager {
   	 * Get the user by ID
   	 */
   	let user = this.users.find(u => u.id === id);
-
   	/**
   	 * Remove the user from the users array.
   	 */

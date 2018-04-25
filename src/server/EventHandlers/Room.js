@@ -61,6 +61,8 @@ class Room {
      */
     this.socketManager.updateUsers();
 
+    this.socketManager.updateRooms();
+
     /**
      * Call the acknowledge callback and pass the nickname
      */
