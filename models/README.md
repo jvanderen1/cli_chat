@@ -6,9 +6,9 @@ Here are the included models:
 
 ![Block Diagram](Block%20Diagram.png)
 
-* [Use Case Model](Use%20Case%20Model.PNG)
+* [Use Case Model](Use%20Case%20Model.png)
 
-![Use Case Model](Use%20Case%20Model.PNG)
+![Use Case Model](Use%20Case%20Model.png)
 
 * [Server Class Diagram](Server%20Class%20Diagram.png)
 
@@ -33,3 +33,11 @@ Here are the included models:
 * [Activity Diagram](Activity%20Diagram.png)
 
 ![Activity Diagram](Activity%20Diagram.png)
+
+* [Data Flow Diagram](Data%20Flow%20Diagram.png)
+
+![Data Flow Diagram](Data%20Flow%20Diagram.png)
+
+* [Control Flow Diagram](Control%20Flow%20Diagram.png)
+
+![Control Flow Diagram](Control%20Flow%20Diagram.png)
