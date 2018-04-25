@@ -83,7 +83,7 @@ let Actions = {
                      * therefore cannot be a name for a room.
                      */
                     if (room === 'NONE') {
-                      console.log('Invalid room name.');
+                      console.log('\'' + room + '\' is an invalid room name.');
                       this.printPrompt();
                     }
                     /**
@@ -160,8 +160,9 @@ let Actions = {
               this.createRoom();
             }
             else {
-              console.log('\nInvalid room selection.');
-              this.printPrompt();
+              console.log('\nInvalid room selection: \'' + room + '\' is not a currently existing room.');
+              console.log('Please try again.');
+              this.joinRoom();
             }
 
             this._in_question = false;
@@ -184,8 +185,10 @@ let Actions = {
       });
     }
     else
+    {
       console.log('\nYou are not currently in any rooms.');
-    
+      this.printPrompt();
+    }
   },
 
 
