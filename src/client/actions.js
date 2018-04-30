@@ -60,8 +60,8 @@ let Actions = {
      * User cannot join a room if already in a room.
      */
     if (this._currentRoom !== null) {
-      console.log('\nYou are already in room ' + this._currentRoom + '.');
-      console.log('Leave your current room in order to create another.');
+      console.warn('\nYou are already in room ' + this._currentRoom + '.');
+      console.warn('Leave your current room in order to create another.');
       this.printPrompt();
     }
 
@@ -83,7 +83,7 @@ let Actions = {
                      * therefore cannot be a name for a room.
                      */
                     if (room === 'NONE') {
-                      console.log('\'' + room + '\' is an invalid room name.');
+                      console.error('\'' + room + '\' is an invalid room name.');
                       this.printPrompt();
                     }
                     /**
@@ -117,7 +117,7 @@ let Actions = {
      * Prompt user to create room if there aren't any existing rooms.
      */
     if (this._rooms.length === 0) {
-      console.log('\nNo existing rooms.');
+      console.warn('\nNo existing rooms.');
       this.createRoom();
     }
 
@@ -125,8 +125,8 @@ let Actions = {
      * User cannot join a room if already in a room.
      */
     else if (this._currentRoom !== null) {
-      console.log('\nYou are already in room ' + this._currentRoom + '.');
-      console.log('Leave your current room in order to join another.');
+      console.error('\nYou are already in room ' + this._currentRoom + '.');
+      console.error('Leave your current room in order to join another.');
       this.printPrompt();
     }
 
@@ -160,8 +160,8 @@ let Actions = {
               this.createRoom();
             }
             else {
-              console.log('\nInvalid room selection: \'' + room + '\' is not a currently existing room.');
-              console.log('Please try again.');
+              console.error('\nInvalid room selection: \'' + room + '\' is not a currently existing room.');
+              console.error('Please try again.');
               this.joinRoom();
             }
 
@@ -186,7 +186,7 @@ let Actions = {
     }
     else
     {
-      console.log('\nYou are not currently in any rooms.');
+      console.error('\nYou are not currently in any rooms.');
       this.printPrompt();
     }
   },
@@ -199,7 +199,7 @@ let Actions = {
     /** Send Message to User/Room */
 
     if (this._users.length === 1) {
-      console.log('\nThere are no other users to message.');
+      console.error('\nThere are no other users to message.');
       this.printPrompt();
     }
 
@@ -217,7 +217,7 @@ let Actions = {
              * array.
              */
             if (user < 1 || user > this._users.length) {
-              console.log('\nInvalid user selection.\n');
+              console.error('\nInvalid user selection.\n');
               this.printPrompt();
               this._in_question = false;
               return;
