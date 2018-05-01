@@ -12,6 +12,12 @@
  * MUST be used as a mixin with 'cli_client.js'
  */
 
+/**
+ * `this._in_question` is used to prevent confusing printouts, while the client is in a question.
+ * During all questions, `this._in_question` is always set to True.
+ * When the question is complete, `this._in_question` is always set to False.
+ */
+
 let Actions = {
 
   /**
