@@ -3,13 +3,13 @@
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
  * 
- * Updated: April 30. 2018 by Grant Savage
+ * Updated: April 30. 2018
  *
  * PrivateMessage.js
  * 
  * This file contains the class definition for our
- * PrivateMessageManager. The PrivateMessageManager
- * class contains the methods that handle the logic
+ * PrivateMessage. The PrivateMessage class
+ * contains the methods that handle the logic
  * for sending peer to peer messages between clients.
  */
 

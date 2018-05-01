@@ -3,14 +3,13 @@
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
  * 
- * Updated: February 19. 2018 by Grant Savage
+ * Updated: April 30. 2018
  *
  * GroupMessage.js
  * 
  * This file contains the class definition for our
- * RoomManager. The RoomManage class contains methods
- * that handle the logic of joining, leaving , and sending
- * messages in specified rooms.
+ * GroupMessage class. This class is responseible for
+ * defining the methods that are used in group messaging. 
  */
 
 class GroupMessage {

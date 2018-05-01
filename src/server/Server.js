@@ -3,21 +3,21 @@
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
  * 
- * Updated: April 1. 2018
+ * Updated: April 30. 2018
  *
  * Server.js
  * 
  * This file serves as the starting point of the socket server.
  * It pulls in the necessary modules, instantiates a new ServerManager
  * class, binds socket events and actions, and starts listening for
- * events on port 3000.
+ * events on a specified port.
  */
 
 /**
  * Pull in required modules and dependencies. We need a Server Manager for 
  * handling the core of our server and a SocketManager for handling our
  * web socket core. We also pull in a custom logger to make things easier
- * to debug. In addition we also pull in our modules that handle the event
+ * to debug. In addition we also pull in our modules that handle the events
  * received by the clients.
  * 
  * The function require pulls in and reads the file specified just like

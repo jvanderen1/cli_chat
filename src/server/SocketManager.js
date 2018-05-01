@@ -3,7 +3,7 @@
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
  * 
- * Updated: April 1. 2018
+ * Updated: April 30. 2018
  *
  * SocketManager.js
  * 
@@ -97,19 +97,18 @@ class SocketManager {
 				rooms.push(room);
 			}
 		});
-		//console.log(rooms);
+
 		/**
 		 * Set the rooms property equal to the filtered
 		 * list of rooms and also return the value for
 		 * use.
-		 */
-		
+		 */	
 		return this.rooms = rooms;
 	}
   
-   /**
-    * Send out an event to all users with the updated
-	* list of created rooms.
+  /**
+   * Send out an event to all users with the updated
+   * list of created rooms.
    */
   updateRooms() {
     this.emit('rooms', this.createdRooms());
