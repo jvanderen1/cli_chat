@@ -20,9 +20,9 @@ class SocketManager {
 	 * Constructor takes in instance of socket.io class
 	 */
 	constructor(io) {
-	    this.io = io;
-	    this.users = [];
-	    this.rooms = [];
+    this.io = io;
+    this.users = [];
+    this.rooms = [];
 	}
 
 	/**
@@ -36,13 +36,14 @@ class SocketManager {
 	/**
 	 * This method takes in a string for a socket event
 	 * and any multiple of arguments for data transmission.
+	 * ..args is a variadic argument
 	 */
 	emit(event, ...args) {
 		this.io.emit(event, args);
 	}
 
 	/**
-	 * Log and send out an event to all users with the updated
+	 * Send out an event to all users with the updated
 	 * list of connected users.
 	 */
 	updateUsers() {
@@ -53,34 +54,62 @@ class SocketManager {
  	 * Get a list of all created rooms
  	 */
  	createdRooms() {
-		var availableRooms = [];
-		var rooms = this.io.sockets.adapter.rooms;
+		/**
+		 * Create temporary array of rooms
+		 */
+		let availableRooms = [];
 
-		for (var room in rooms) {
+		/**
+		 * Get list of available rooms. Unfortunately 
+		 * the list of rooms returned from the socket
+		 * library includes is in an odd structure.
+		 */
+		let rooms = this.io.sockets.adapter.rooms;
+
+		/**
+		 * To remove get the rooms in a simple array,
+		 * loop through the rooms and only push the name
+		 * of the room to the avaiable rooms array.
+		 */
+		for (let room in rooms) {
 			if (!rooms[room].hasOwnProperty(room)) {
 				availableRooms.push(room);
 			}
 		}
 
+		/**
+		 * Reset rooms to an empty array
+		 */
 		rooms = [];
 
-		var users = Object.keys(this.io.sockets.sockets);
+		/**
+		 * Unfortunately the list of rooms also contains 
+		 * the currently connected users. 
+		 */
+		let users = Object.keys(this.io.sockets.sockets);
 
 		/**
-		 * Filter out the users our of the list of rooms
+		 * Filter the users out of the list of rooms by checking
+		 * if each element is 
 		 */
 		availableRooms.forEach((room) => {
 			if (!users.includes(room)) {
 				rooms.push(room);
 			}
 		});
+		//console.log(rooms);
+		/**
+		 * Set the rooms property equal to the filtered
+		 * list of rooms and also return the value for
+		 * use.
+		 */
 		
 		return this.rooms = rooms;
 	}
   
-  /**
-   * Log and send out an event to all users with the updated
-	 * list of created rooms.
+   /**
+    * Send out an event to all users with the updated
+	* list of created rooms.
    */
   updateRooms() {
     this.emit('rooms', this.createdRooms());

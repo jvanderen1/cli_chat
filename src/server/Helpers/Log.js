@@ -15,14 +15,17 @@
  */
 
 /**
- * Pull in the colors package
+ * Pull in the colors package. This adds the necessary
+ * output to standard out to colorize the text.
  */
 const colors = require('colors');
 
 class Log {
 	
-  /**
-	 * Get application debug state
+  	/**
+	 * Explicit constructor takes in a boolean
+	 * to decide whether logs should be printed
+	 * or not.
 	 */
 	constructor(debugOn) {
 		this.debugOn = debugOn;

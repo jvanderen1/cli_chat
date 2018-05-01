@@ -3,7 +3,7 @@
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
  * 
- * Updated: February 19. 2018 by Grant Savage
+ * Updated: April 30. 2018 by Grant Savage
  *
  * ServerManager.js
  * 
@@ -20,6 +20,9 @@
 
 class ServerManager {
 
+	/**
+	 * Default constructor with no arguments
+	 */
 	constructor() {
 		/**
 		 * Pull in and attach required modules to the

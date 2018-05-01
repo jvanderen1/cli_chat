@@ -1,10 +1,25 @@
 /**
+ * CLI Chat
+ * SE420 & SE310 Spring 2018 Group Project
+ * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
+ *
+ * Updated: April 30. 2018
+ *
+ * nicknameTests.js
+ * 
+ * Module and I&T Tests
+ *
+ * This file contains the tests necessary for testing
+ * our server CSUs for nickname functionality.
+ */
+
+/**
  * Pull in the Server class and instantiate a new isntance.
  */
 const Server = require('../../src/server/Server');
 let httpServer = new Server(false);
 
-/*
+/**
  * Pull in the assertion and expect interfaces
  * from the chai testing framework. Also pull in
  * the should interface for testing.
@@ -18,36 +33,43 @@ let should = require('should');
  */
 let io = require('socket.io-client');
 
-/*
+/**
  * Define out the URL the mock clients
  * should connect to and the options those
  * clients should use.
  */
-let socketURL = 'http://localhost:3000';
+const port = 3000;
+let socketURL = 'http://localhost:' + port;
 let options = {
 	transports: ['websocket'],
 	'force new connection' : true
 };
 
-/*
- * @tests
- *
+/**
  * This block of tests test the private message functionality
  * of the clients and server.
  */
 describe('Server: User and Nickname Tests', () => {
+	/**
+	 * The "before" block gets executed before the test for
+	 * this test file get executed. The method below starts
+	 * our the server on port 3000.
+	 */
 	before(() => {
-		httpServer.start(3000);
+		httpServer.start(port);
 	});
 
+	/**
+	 * The "after" block gets executed after all tests for
+	 * this test file get executed. The method below stops our
+	 * server and deletes the instance from memory.
+	 */
 	after(() => {
 		httpServer.stop();
 		delete httpServer;
 	});
 
-	/*
-	 * @test
-	 *
+	/**
 	 * This test asserts that when a client connects and enters their username
 	 * a updated list of users is sent out to other clients containing the 
 	 * correct data.
@@ -91,9 +113,7 @@ describe('Server: User and Nickname Tests', () => {
 		});
 	});
 
-	/*
-	 * @test
-	 *
+	/**
 	 * This test asserts that when a client disconnects or exits the application
 	 * the client is removed from the global list of connected users and the new
 	 * list of users is sent out.

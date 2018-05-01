@@ -16,14 +16,21 @@
 class GroupMessage {
   
   /**
-   * Constructor takes in a Socket instance and
+   * Explicit constructor takes in a Socket instance and
    * Log instance.
    */
   constructor(socket, logger) {
     this.socket = socket;
     this.logger = logger;
+
+    /**
+     * Create a map of event handlers to be used during the
+     * handler binding process to a socket. We call the bind
+     * method on each handler method in this class to tell
+     * the interpreter what the "this" keyword refers to.
+     */
     this.handlers = {
-      groupMessage: this.groupMessage.bind(this)
+      groupMessage: this.groupMessage.bind(this) 
     };
   }
 
@@ -40,6 +47,8 @@ class GroupMessage {
 
     /**
      * Transmit the received message payload to the specified socket ID.
+     * The "to" method is internal to the socket.io socket instance and
+     * directs the message to a specific room.
      */
     this.socket.to(roomName).
         emit('groupMessage', this.socket.id, roomName, message);

@@ -1,15 +1,23 @@
 /**
+ * CLI Chat
+ * SE420 & SE310 Spring 2018 Group Project
+ * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
+ *
+ * Updated: April 30. 2018
+ *
+ * privateMessagingTests.js
+ * 
+ * Module and I&T Tests
+ *
+ * This file contains the tests necessary for testing
+ * our server CSUs for room logic.
+ */
+
+/**
  * Pull in the Server class and instantiate a new isntance.
  */
 const Server = require('../../src/server/Server');
 let httpServer = new Server(false);
-
-/*
- * Pull in the assertion and expect interfaces
- * from the chai testing framework. Also pull in
- * the should interface for testing.
- */
-//let should = require('should');
 
 /**
  * Pull in the socket.io client library for mocking
@@ -18,36 +26,43 @@ let httpServer = new Server(false);
  */
 let io = require('socket.io-client');
 
-/*
+/**
  * Define out the URL the mock clients
  * should connect to and the options those
  * clients should use.
  */
-let socketURL = 'http://localhost:3000';
+const port = 3000;
+let socketURL = 'http://localhost:' + port;
 let options = {
 	transports: ['websocket'],
 	'force new connection' : true
 };
 
-/*
- * @tests
- *
+/**
  * This block of tests test the private message functionality
  * of the clients and server.
  */
 describe('Server: Client Private Message Passing', () => {
+	/**
+	 * The "before" block gets executed before the test for
+	 * this test file get executed. The method below starts
+	 * our the server on port 3000.
+	 */
 	before(() => {
-		httpServer.start(3000);
+		httpServer.start(port);
 	});
 
+	/**
+	 * The "after" block gets executed after all tests for
+	 * this test file get executed. The method below stops our
+	 * server and deletes the instance from memory.
+	 */
 	after(() => {
 		httpServer.stop();
 		delete httpServer;
 	});
 
-	/*
-	 * @test
-	 *
+	/**
 	 * This test asserts that the mock clients can connect
 	 * to our server. The test fails if the test fails to
 	 * complete within 2 seconds.
@@ -73,9 +88,7 @@ describe('Server: Client Private Message Passing', () => {
 		});
 	});
 
-	/*
-	 * @test
-	 *
+	/**
 	 * This test asserts that when a client sends a private message to another
 	 * user, the client receives an acknowledge message back indicating that
 	 * the message was successfully sent.
@@ -108,9 +121,7 @@ describe('Server: Client Private Message Passing', () => {
 		});
 	});
 
-	/*
-	 * @test
-	 *
+	/**
 	 * This test asserts that the client that receives a message from 
 	 * another client is able to successfully receive the exact same
 	 * message.

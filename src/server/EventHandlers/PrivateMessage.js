@@ -3,7 +3,7 @@
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
  * 
- * Updated: February 19. 2018 by Grant Savage
+ * Updated: April 30. 2018 by Grant Savage
  *
  * PrivateMessage.js
  * 
@@ -22,6 +22,13 @@ class PrivateMessage {
 	constructor(socket, logger) {
 		this.socket = socket;
 		this.logger = logger;
+
+		/**
+		 * Create a map of event handlers to be used during the
+		 * handler binding process to a socket. We call the bind
+    	 * method on each handler method in this class to tell
+     	 * the interpreter what the "this" keyword refers to.
+		 */
 		this.handlers = {
 			privateMessage: this.privateMessage.bind(this),
 		}
@@ -39,7 +46,10 @@ class PrivateMessage {
 			message, 'that will be transmitted to', user].join(' '));
 
 		/**
-		 * Transmit the received message payload to the specified socket ID.
+		 * Check that the selected user to transmit a message to is not the 
+		 * same user. Transmit the received message payload to the specified 
+		 * socket ID. Selecting yourself in the client should not be possible
+		 * but we perform a check here anyway.
 		 */
 		if (user != this.socket.id)
 			this.socket.to(user).emit('privateMessage', this.socket.id, message);

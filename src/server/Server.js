@@ -32,6 +32,11 @@ const Log = require('./Helpers/Log');
 
 class Server {
 
+  /**
+   * Explicit constructor takes in a boolean value
+   * to set whether the server will be run in debug
+   * mode or not.
+   */
   constructor(debug) {
     /**
      * Instantiate a new Log class instance
@@ -132,6 +137,9 @@ class Server {
    * port.
    */
   start(port) {
+    /**
+     * Quick log to show activity
+     */
     this.logger.info('Initializing Server...');
 
     /**
@@ -148,7 +156,8 @@ class Server {
   }
 
   /**
-   * This method stops the server.
+   * This method stops the server from listening for incoming
+   * connections and requests.
    */
   stop() {
     this.serverManager.http.close();
