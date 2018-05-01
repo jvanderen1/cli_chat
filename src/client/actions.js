@@ -56,6 +56,38 @@ let Actions = {
   },
 
   /**
+   * Method used to gather a list of all existing rooms and print them to the
+   * console.
+   */
+  listRooms() {
+    /** List Current Existing Rooms */
+    
+    /**
+     * Notify user that there are no existing rooms.
+     */
+    if (this._rooms.length === 0) {
+      console.warn('\nNo existing rooms.');
+    }
+    
+    /**
+     * Print every element of the this._rooms array to list the
+     * existing rooms.
+     */
+    else {
+      console.log('\nExisting rooms: ');
+      for (let i = 0; i < this._rooms.length; i++) {
+        console.log(this._rooms[i]);
+      }
+    }
+    
+    /**
+     * Ask for user input again.
+     */
+    this.printPrompt();
+  },
+
+
+  /**
    * Ask the user if they want to create a room, name it, and automatically
    * put the user in the room.
    */
@@ -137,15 +169,6 @@ let Actions = {
     }
 
     else {
-      /**
-       * Print every element of the this._rooms array to list the
-       * existing rooms.
-       */
-      console.log('\nExisting rooms: ');
-      for (let i = 0; i < this._rooms.length; i++) {
-        console.log(this._rooms[i]);
-      }
-
       /**
        * User will enter the name of any existing room to join it or
        * enter 'NONE' to create a new room.

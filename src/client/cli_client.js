@@ -3,7 +3,7 @@
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
  *
- * Updated: April 1. 2018
+ * Updated: April 30. 2018
  *
  * cli_client.js
  *
@@ -31,11 +31,9 @@ class CLI_Client {
     this.DEBUG = debug;
 
     /**
-     * Array to keep track of the current online users, their
-     * nicknames, the existing rooms, and the current room
-     * the user is in.
+     * Array to keep track of the current online users, the existing rooms,
+     * and the current room the user is in.
      */
-    // TODO: Implement user class to replace this
     this._users = [];
     this._rooms = [];
     this._currentRoom = null;
@@ -47,7 +45,8 @@ class CLI_Client {
     this._rl = this.createReadline();
 
     /**
-     * Gathers actions to be used in this class.
+     * Calls in the actions.js file to be used in this class to
+     * provide different options for the user to choose to do.
      */
     const Actions = require('./actions').Actions;
 
