@@ -16,8 +16,7 @@ const socketURL = 'http://localhost:3000';
 /**
  * @tests
  *
- * This block of tests test the private message functionality
- * of the clients and server.
+ * This block of tests test the client's ability to connect and disconnect from the server.
  */
 describe('Client: Connection and Disconnection', () => {
 
