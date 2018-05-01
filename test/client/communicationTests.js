@@ -24,6 +24,9 @@ describe('Client: Connection and Disconnection', () => {
   // SETUP //
   ///////////
 
+    /**
+     * The before() function executes before the first it() function.
+     */
 	before(() => {
 
     /**
@@ -39,6 +42,10 @@ describe('Client: Connection and Disconnection', () => {
 		httpServer.start(3000);
 	});
 
+
+    /**
+     * The after() function executes after the last it() function.
+     */
 	after(() => {
 		/**
 		 * Close server connection.
