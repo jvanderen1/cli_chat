@@ -83,6 +83,7 @@ describe('Server: Room', () => {
 
 		client1.on('rooms', (rooms) => {
 			i++;
+			console.log("called")
 			if (i == 6) {
 				rooms[0].should.containDeep(['abc123']);
 				done()
@@ -102,7 +103,7 @@ describe('Server: Room', () => {
 				});
 			});
 		});
-	}).timeout(30000);
+	}).timeout(10000);
 
 	/**
 	 * This tests that when a client leaves a room the server sends an 
