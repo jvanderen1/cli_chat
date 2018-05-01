@@ -77,9 +77,17 @@ describe('Server: Room', () => {
 	it('should receive updated list of rooms when room is created', (done) => {
 		// Create a test string to send
 		const roomName = "abc123";
-
+		let i = 0;
 		// Create a new client
 		const client1 = io.connect(socketURL, options);
+
+		client1.on('rooms', (rooms) => {
+			i++;
+			if (i == 6) {
+				rooms[0].should.containDeep(['abc123']);
+				done()
+			}
+		});
 
 		// Bind the connect event to the client.
 		client1.on('connect', () => {
@@ -91,14 +99,6 @@ describe('Server: Room', () => {
 
 				// Send a private message to the second client
 				client2.emit('joinRoom', roomName, (data) => {
-					client1.on('rooms', (rooms) => {
-						rooms[0][0].should.equal('abc123');
-			
-						// Disconnect the clients and end the test.
-						client1.disconnect();
-						client2.disconnect();
-						done()
-					});
 				});
 			});
 		});
