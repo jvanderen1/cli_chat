@@ -96,12 +96,13 @@ describe('Server: Room', () => {
 			
 						// Disconnect the clients and end the test.
 						client1.disconnect();
+						client2.disconnect();
 						done()
 					});
 				});
 			});
 		});
-	});
+	}, 4000);
 
 	/**
 	 * This tests that when a client leaves a room the server sends an 
