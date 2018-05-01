@@ -97,7 +97,7 @@ class CLI_Client {
     });
 
     /**
-     * When our client connects, log it and display the menu options.
+     * When our client connects, log it, display their UUID, and prompt for a nickname.
      */
     this._socket.on('connect', () => {
       console.log('App Connected!\n');

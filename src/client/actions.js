@@ -117,7 +117,7 @@ let Actions = {
                   (room) => {
                     /**
                      * NONE is the keyword for the user to create a room after
-                     * choosing the 'Join Room' option (refer to line 155) and
+                     * choosing the 'Join Room' option (refer to line 179) and
                      * therefore cannot be a name for a room.
                      */
                     if (room === 'NONE') {
@@ -178,6 +178,10 @@ let Actions = {
 
       this._rl.question('\nWhich room would you like to join? (NONE to create room) ',
           (room) => {
+            /**
+             * Go through the _rooms array to find the room the user is requesting
+             * to join, log it, and display success message.
+             */
             if (this._rooms.indexOf(room) >= 0) {
               this._socket.emit('joinRoom', room, (roomName) => {
                 console.log("Joined room " + roomName);
@@ -185,9 +189,18 @@ let Actions = {
               });
               this._currentRoom = room; 
             }
+            /**
+             * Go to the createRoom() function if user does not want to join any of
+             * the existing rooms and enters the keyword 'NONE'.
+             */
             else if (room === 'NONE') {
               this.createRoom();
             }
+            /**
+             * User enters an invalid input that does not match the name of any
+             * existing rooms or did not enter the keyword 'NONE'. Reprompts user
+             * for another input.
+             */
             else {
               console.error('\nInvalid room selection: \'' + room + '\' is not a currently existing room.');
               console.error('Please try again.');
@@ -206,6 +219,10 @@ let Actions = {
   leaveRoom() {
     /** Leave Room */
 
+    /**
+     * Check if user is in a room, leave the room, log it and display a success
+     * message, and update the _currentRoom variable to null.
+     */
     if (this._currentRoom !== null) {
       this._socket.emit('leaveRoom', this._currentRoom, (roomName) => {
         console.log("Left room.");
@@ -213,6 +230,9 @@ let Actions = {
         this.printPrompt();
       });
     }
+    /**
+     * If _currentRoom is null, the user is not in a room.
+     */
     else
     {
       console.error('\nYou are not currently in any rooms.');
