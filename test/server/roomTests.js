@@ -93,8 +93,8 @@ describe('Server: Room', () => {
 				client2.emit('joinRoom', roomName, (data) => {
 					client1.on('rooms', (rooms) => {
 						i++;
-						console.log("called")
-						if (i == 10) {
+						if (i == 11) {
+							console.log("done")
 							rooms[0].should.containDeep(['abc123']);
 							done()
 						}
