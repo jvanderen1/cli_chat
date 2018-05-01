@@ -30,9 +30,13 @@ Here are the included models:
 
 ![Sequence Diagram 3](Sequence%20Diagram%203.PNG)
 
-* [Activity Diagram](Activity%20Diagram.png)
+* [Client Connection Activity Diagram](Client%20Connection%20Activity%20Diagram.png)
 
-![Activity Diagram](Activity%20Diagram.png)
+![Client Connection Activity Diagram](Client%20Connection%20Activity%20Diagram.png)
+
+* [Actions Activity Diagram](Actions%20Activity%20Diagram.png)
+
+![Actions Activity Diagram](Actions%20Activity%20Diagram.png)
 
 * [Data Flow Diagram](Data%20Flow%20Diagram.png)
 
