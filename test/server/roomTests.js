@@ -77,7 +77,11 @@ describe('Server: Room', () => {
 	it('should receive updated list of rooms when room is created', (done) => {
 		// Create a test string to send
 		const roomName = "abc123";
+
+		// Declare index variable for counting the number
+		// of times the rooms event occurs.
 		let i = 0;
+
 		// Create a new client
 		const client1 = io.connect(socketURL, options);
 
@@ -88,13 +92,17 @@ describe('Server: Room', () => {
 
 			// Bind the connect event to the second client
 			client2.on('connect', () => {
-
 				// Send a private message to the second client
 				client2.emit('joinRoom', roomName, (data) => {
+					// Bind the rooms event to the client to get the
+					// updated list of rooms
 					client1.on('rooms', (rooms) => {
+						// The i counter and check is kind of a hack. The
+						// rooms event occurs multiple times in this test
+						// and we want to test only the last result.
 						i++;
 						if (i == 11) {
-							console.log("done")
+							// Assert that the rooms array contains our test room
 							rooms[0].should.containDeep(['abc123']);
 							done()
 						}
@@ -102,7 +110,7 @@ describe('Server: Room', () => {
 				});
 			});
 		});
-	}).timeout(10000);
+	}).timeout(5000);
 
 	/**
 	 * This tests that when a client leaves a room the server sends an 
@@ -120,6 +128,8 @@ describe('Server: Room', () => {
 			// Send a private message to the second client
 			client1.emit('joinRoom', roomName, (data) => {
 				client1.emit('leaveRoom', roomName, (data) => {
+					// Assert that the room name is the same as
+					// the test name.
 					data.should.equal(roomName);
 
 					// Disconnect the clients and end the test.

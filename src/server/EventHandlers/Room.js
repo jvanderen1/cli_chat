@@ -8,9 +8,10 @@
  * Room.js
  * 
  * This file contains the class definition for our
- * RoomManager. The RoomManage class contains methods
- * that handle the logic of joining, leaving , and sending
- * messages in specified rooms.
+ * Room class. The Room class contains methods
+ * that handle the logic of joining and leaving
+ * rooms. This class also contains the method for
+ * registering a nickname.
  */
 
 class Room {

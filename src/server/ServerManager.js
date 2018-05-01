@@ -3,7 +3,7 @@
  * SE420 & SE310 Spring 2018 Group Project
  * Grant Savage, Josh Van Deren, Joy Tan, Jacob Lai
  * 
- * Updated: April 30. 2018 by Grant Savage
+ * Updated: April 30. 2018
  *
  * ServerManager.js
  * 
