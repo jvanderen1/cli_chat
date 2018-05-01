@@ -81,15 +81,6 @@ describe('Server: Room', () => {
 		// Create a new client
 		const client1 = io.connect(socketURL, options);
 
-		client1.on('rooms', (rooms) => {
-			i++;
-			console.log("called")
-			if (i == 6) {
-				rooms[0].should.containDeep(['abc123']);
-				done()
-			}
-		});
-
 		// Bind the connect event to the client.
 		client1.on('connect', () => {
 			// When the first client connects, create another client
@@ -100,6 +91,14 @@ describe('Server: Room', () => {
 
 				// Send a private message to the second client
 				client2.emit('joinRoom', roomName, (data) => {
+					client1.on('rooms', (rooms) => {
+						i++;
+						console.log("called")
+						if (i == 10) {
+							rooms[0].should.containDeep(['abc123']);
+							done()
+						}
+					});
 				});
 			});
 		});
