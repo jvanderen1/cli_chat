@@ -102,7 +102,7 @@ describe('Server: Room', () => {
 				});
 			});
 		});
-	}, 4000);
+	});
 
 	/**
 	 * This tests that when a client leaves a room the server sends an 
@@ -129,4 +129,4 @@ describe('Server: Room', () => {
 			});
 		});
 	});
-})
+}, 10000);
