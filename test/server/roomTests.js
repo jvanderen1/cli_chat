@@ -102,7 +102,7 @@ describe('Server: Room', () => {
 				});
 			});
 		});
-	}).timeout(10000);
+	}).timeout(30000);
 
 	/**
 	 * This tests that when a client leaves a room the server sends an 
